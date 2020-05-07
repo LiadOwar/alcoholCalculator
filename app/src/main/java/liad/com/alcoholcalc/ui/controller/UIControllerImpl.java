@@ -20,6 +20,7 @@ public class UIControllerImpl implements UIController {
             String type = drinkDetailsObject.getString("type");
             Integer amount = drinkDetailsObject.getInt("amount");
 
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

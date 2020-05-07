@@ -5,5 +5,6 @@ package liad.com.alcoholcalc.ui.controller;
  */
 
 public interface UIController {
+
     void addDrinkToSession(String drinkDetails);
 }
