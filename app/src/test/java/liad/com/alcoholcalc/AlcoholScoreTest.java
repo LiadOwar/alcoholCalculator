@@ -3,11 +3,11 @@ package liad.com.alcoholcalc;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import liad.com.alcoholcalc.beverage.BeverageType;
-import liad.com.alcoholcalc.session.SessionDrinkItem;
-import liad.com.alcoholcalc.session.SessionStatus;
-import liad.com.alcoholcalc.user.GENDER;
-import liad.com.alcoholcalc.user.SessionUser;
+import liad.com.alcoholcalc.server.server.beverage.BeverageType;
+import liad.com.alcoholcalc.server.server.session.SessionDrinkItem;
+import liad.com.alcoholcalc.server.server.session.SessionStatus;
+import liad.com.alcoholcalc.server.server.user.GENDER;
+import liad.com.alcoholcalc.server.server.user.SessionUser;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -119,7 +119,7 @@ public class AlcoholScoreTest extends BaseTest {
         sessionRunner.addDrinkItemToSession(sessionDrinkItem1);
         drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(30));
         sessionRunner.addDrinkItemToSession(sessionDrinkItem2);
-        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(60));
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(330));
         sessionRunner.calculateSessionStatus();
         SessionStatus sessionStatus = drinkingSession.getSessionStatus();
         Double alcoholScore = sessionStatus.getAlcoholScore();
