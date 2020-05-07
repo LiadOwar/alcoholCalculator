@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AlcoholCalc</string>
+    <string-array name="genderSpinner">
+        <item>MALE</item>
+        <item>FEMALE</item>
+    </string-array>
+</resources>
