@@ -1,6 +1,6 @@
-package liad.com.alcoholcalc.session;
+package liad.com.alcoholcalc.server.session;
 
-import liad.com.alcoholcalc.user.SessionUser;
+import liad.com.alcoholcalc.server.user.SessionUser;
 
 /**
  * Created by liad on 25/04/2020.

@@ -1,4 +1,4 @@
-package liad.com.alcoholcalc.consts;
+package liad.com.alcoholcalc.server.consts;
 
 /**
  * Created by liad on 28/04/2020.

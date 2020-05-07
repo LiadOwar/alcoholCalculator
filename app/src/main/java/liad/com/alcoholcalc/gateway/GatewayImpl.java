@@ -8,11 +8,11 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-import liad.com.alcoholcalc.beverage.Beverage;
-import liad.com.alcoholcalc.beverage.StrongBeer;
-import liad.com.alcoholcalc.session.SessionDrinkItem;
-import liad.com.alcoholcalc.session.SessionRunner;
-import liad.com.alcoholcalc.session.SessionRunnerImpl;
+import liad.com.alcoholcalc.server.beverage.Beverage;
+import liad.com.alcoholcalc.server.beverage.StrongBeer;
+import liad.com.alcoholcalc.server.session.SessionDrinkItem;
+import liad.com.alcoholcalc.server.session.SessionRunner;
+import liad.com.alcoholcalc.server.session.SessionRunnerImpl;
 
 /**
  * Created by liad on 07/05/2020.

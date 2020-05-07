@@ -1,8 +1,8 @@
-package liad.com.alcoholcalc.session;
+package liad.com.alcoholcalc.server.session;
 
 import org.joda.time.LocalDateTime;
 
-import liad.com.alcoholcalc.beverage.Beverage;
+import liad.com.alcoholcalc.server.beverage.Beverage;
 
 /**
  * Created by liad on 22/04/2020.

@@ -6,10 +6,10 @@
 //
 //import org.junit.Test;
 //
-//import liad.com.alcoholcalc.beverage.Beer;
-//import liad.com.alcoholcalc.beverage.BeerType;
-//import liad.com.alcoholcalc.beverage.Beverage;
-//import liad.com.alcoholcalc.beverage.BeverageType;
+//import liad.com.alcoholcalc.server.beverage.Beer;
+//import liad.com.alcoholcalc.server.beverage.BeerType;
+//import liad.com.alcoholcalc.server.beverage.Beverage;
+//import liad.com.alcoholcalc.server.beverage.BeverageType;
 //
 //import static org.hamcrest.CoreMatchers.is;
 //import static org.junit.Assert.assertThat;

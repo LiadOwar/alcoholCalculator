@@ -14,9 +14,9 @@ import android.widget.Spinner;
 
 import liad.com.alcoholcalc.converter.UIConverter;
 import liad.com.alcoholcalc.converter.UIConverterImpl;
-import liad.com.alcoholcalc.session.DrinkingSession;
-import liad.com.alcoholcalc.user.GENDER;
-import liad.com.alcoholcalc.user.SessionUser;
+import liad.com.alcoholcalc.server.session.DrinkingSession;
+import liad.com.alcoholcalc.server.user.GENDER;
+import liad.com.alcoholcalc.server.user.SessionUser;
 
 import static liad.com.alcoholcalc.R.id.submitUserBtn;
 

@@ -1,12 +1,13 @@
 package liad.com.alcoholcalc.converter;
 
-import liad.com.alcoholcalc.user.GENDER;
+import liad.com.alcoholcalc.server.user.GENDER;
 
 /**
  * Created by liad on 01/05/2020.
  */
 
 public class UIConverterImpl implements UIConverter {
+
     @Override
     public Double convertUIWieght(Integer weightInt) {
         return Double.valueOf(weightInt);

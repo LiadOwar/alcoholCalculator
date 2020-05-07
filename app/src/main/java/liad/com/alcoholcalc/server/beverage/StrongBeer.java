@@ -1,4 +1,4 @@
-package liad.com.alcoholcalc.beverage;
+package liad.com.alcoholcalc.server.beverage;
 
 /**
  * Created by liad on 22/04/2020.

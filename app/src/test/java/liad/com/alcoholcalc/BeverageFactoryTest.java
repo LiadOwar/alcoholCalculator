@@ -3,9 +3,9 @@ package liad.com.alcoholcalc;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
-import liad.com.alcoholcalc.beverage.Beverage;
-import liad.com.alcoholcalc.beverage.BeverageType;
-import liad.com.alcoholcalc.beverage.StrongBeer;
+import liad.com.alcoholcalc.server.beverage.Beverage;
+import liad.com.alcoholcalc.server.beverage.BeverageType;
+import liad.com.alcoholcalc.server.beverage.StrongBeer;
 
 import static org.junit.Assert.assertThat;
 

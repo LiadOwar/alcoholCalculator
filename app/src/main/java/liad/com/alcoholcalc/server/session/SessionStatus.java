@@ -1,4 +1,4 @@
-package liad.com.alcoholcalc.session;
+package liad.com.alcoholcalc.server.session;
 
 import org.joda.time.LocalDateTime;
 

@@ -2,8 +2,8 @@ package liad.com.alcoholcalc;
 
 import org.junit.Test;
 
-import liad.com.alcoholcalc.user.GENDER;
-import liad.com.alcoholcalc.user.SessionUser;
+import liad.com.alcoholcalc.server.user.GENDER;
+import liad.com.alcoholcalc.server.user.SessionUser;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;

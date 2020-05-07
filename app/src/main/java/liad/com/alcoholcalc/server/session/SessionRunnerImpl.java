@@ -1,4 +1,4 @@
-package liad.com.alcoholcalc.session;
+package liad.com.alcoholcalc.server.session;
 
 import org.joda.time.LocalDateTime;
 import org.joda.time.Period;
@@ -7,10 +7,10 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 
-import liad.com.alcoholcalc.beverage.Beverage;
-import liad.com.alcoholcalc.consts.Consts;
-import liad.com.alcoholcalc.user.GENDER;
-import liad.com.alcoholcalc.user.SessionUser;
+import liad.com.alcoholcalc.server.beverage.Beverage;
+import liad.com.alcoholcalc.server.consts.Consts;
+import liad.com.alcoholcalc.server.user.GENDER;
+import liad.com.alcoholcalc.server.user.SessionUser;
 
 /**
  * Created by liad on 25/04/2020.

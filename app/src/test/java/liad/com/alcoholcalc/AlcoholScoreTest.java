@@ -3,11 +3,11 @@ package liad.com.alcoholcalc;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import liad.com.alcoholcalc.server.server.beverage.BeverageType;
-import liad.com.alcoholcalc.server.server.session.SessionDrinkItem;
-import liad.com.alcoholcalc.server.server.session.SessionStatus;
-import liad.com.alcoholcalc.server.server.user.GENDER;
-import liad.com.alcoholcalc.server.server.user.SessionUser;
+import liad.com.alcoholcalc.server.beverage.BeverageType;
+import liad.com.alcoholcalc.server.session.SessionDrinkItem;
+import liad.com.alcoholcalc.server.session.SessionStatus;
+import liad.com.alcoholcalc.server.user.GENDER;
+import liad.com.alcoholcalc.server.user.SessionUser;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;

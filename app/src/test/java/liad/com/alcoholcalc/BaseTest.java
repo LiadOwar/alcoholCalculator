@@ -3,10 +3,10 @@ package liad.com.alcoholcalc;
 import org.joda.time.LocalDateTime;
 import org.junit.After;
 
-import liad.com.alcoholcalc.beverage.BeverageFactory;
-import liad.com.alcoholcalc.session.DrinkingSession;
-import liad.com.alcoholcalc.session.SessionRunner;
-import liad.com.alcoholcalc.session.SessionRunnerImpl;
+import liad.com.alcoholcalc.server.beverage.BeverageFactory;
+import liad.com.alcoholcalc.server.session.DrinkingSession;
+import liad.com.alcoholcalc.server.session.SessionRunner;
+import liad.com.alcoholcalc.server.session.SessionRunnerImpl;
 import liad.com.alcoholcalc.utils.TestFactory;
 
 /**

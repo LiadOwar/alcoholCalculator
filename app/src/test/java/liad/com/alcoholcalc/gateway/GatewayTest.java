@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.List;
 
 import liad.com.alcoholcalc.BaseTest;
-import liad.com.alcoholcalc.session.SessionDrinkItem;
+import liad.com.alcoholcalc.server.session.SessionDrinkItem;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;

@@ -1,4 +1,4 @@
-package liad.com.alcoholcalc.session;
+package liad.com.alcoholcalc.server.session;
 
 import com.google.common.collect.Lists;
 
@@ -6,8 +6,8 @@ import org.joda.time.LocalDateTime;
 
 import java.util.List;
 
-import liad.com.alcoholcalc.user.GENDER;
-import liad.com.alcoholcalc.user.SessionUser;
+import liad.com.alcoholcalc.server.user.GENDER;
+import liad.com.alcoholcalc.server.user.SessionUser;
 
 /**
  * Created by liad on 22/04/2020.

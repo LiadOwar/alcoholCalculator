@@ -1,6 +1,6 @@
 package liad.com.alcoholcalc.converter;
 
-import liad.com.alcoholcalc.user.GENDER;
+import liad.com.alcoholcalc.server.user.GENDER;
 
 /**
  * Created by liad on 01/05/2020.

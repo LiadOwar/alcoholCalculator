@@ -1,4 +1,4 @@
-package liad.com.alcoholcalc.beverage;
+package liad.com.alcoholcalc.server.beverage;
 
 import com.google.common.collect.Maps;
 

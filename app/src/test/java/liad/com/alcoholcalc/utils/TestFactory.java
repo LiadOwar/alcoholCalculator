@@ -2,11 +2,11 @@ package liad.com.alcoholcalc.utils;
 
 import org.joda.time.LocalDateTime;
 
-import liad.com.alcoholcalc.beverage.Beverage;
-import liad.com.alcoholcalc.beverage.BeverageFactory;
-import liad.com.alcoholcalc.beverage.BeverageType;
-import liad.com.alcoholcalc.session.DrinkingSession;
-import liad.com.alcoholcalc.session.SessionDrinkItem;
+import liad.com.alcoholcalc.server.beverage.Beverage;
+import liad.com.alcoholcalc.server.beverage.BeverageFactory;
+import liad.com.alcoholcalc.server.beverage.BeverageType;
+import liad.com.alcoholcalc.server.session.DrinkingSession;
+import liad.com.alcoholcalc.server.session.SessionDrinkItem;
 
 /**
  * Created by liad on 22/04/2020.

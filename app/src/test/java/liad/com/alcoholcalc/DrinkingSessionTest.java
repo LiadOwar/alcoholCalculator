@@ -5,11 +5,11 @@ import org.junit.Test;
 
 import java.util.List;
 
-import liad.com.alcoholcalc.beverage.Beverage;
-import liad.com.alcoholcalc.beverage.BeverageType;
-import liad.com.alcoholcalc.session.DrinkingSession;
-import liad.com.alcoholcalc.session.SessionDrinkItem;
-import liad.com.alcoholcalc.session.SessionStatus;
+import liad.com.alcoholcalc.server.beverage.Beverage;
+import liad.com.alcoholcalc.server.beverage.BeverageType;
+import liad.com.alcoholcalc.server.session.DrinkingSession;
+import liad.com.alcoholcalc.server.session.SessionDrinkItem;
+import liad.com.alcoholcalc.server.session.SessionStatus;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
