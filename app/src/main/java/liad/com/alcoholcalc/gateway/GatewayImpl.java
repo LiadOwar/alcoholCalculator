@@ -3,16 +3,14 @@ package liad.com.alcoholcalc.gateway;
 import com.google.common.collect.Maps;
 
 import org.joda.time.LocalDateTime;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Map;
 
+import liad.com.alcoholcalc.server.ServerController;
+import liad.com.alcoholcalc.server.ServerControllerImpl;
 import liad.com.alcoholcalc.server.beverage.Beverage;
 import liad.com.alcoholcalc.server.beverage.StrongBeer;
 import liad.com.alcoholcalc.server.session.SessionDrinkItem;
-import liad.com.alcoholcalc.server.session.SessionRunner;
-import liad.com.alcoholcalc.server.session.SessionRunnerImpl;
 
 /**
  * Created by liad on 07/05/2020.
@@ -20,9 +18,10 @@ import liad.com.alcoholcalc.server.session.SessionRunnerImpl;
 
 public class GatewayImpl implements Gateway {
 
-    private SessionRunner sessionRunner = new SessionRunnerImpl();
+
     private Map<String, Beverage> beverageConverterMap = Maps.newHashMap();
     private Map<String, String> uIBeverageNameConverterMap = Maps.newHashMap();
+    private ServerController serverController = new ServerControllerImpl();
 
     public GatewayImpl() {
         loadConverterMap();
@@ -38,17 +37,11 @@ public class GatewayImpl implements Gateway {
     @Override
     public void AddDrinkFromUIToServer(String drinkDetails) {
 
-        try {
-            JSONObject drinkDetailsJsonObject = new JSONObject(drinkDetails);
-            String type = drinkDetailsJsonObject.getString("type");
-            String amount = drinkDetailsJsonObject.getString("amount");
-            Beverage beverage = convertStringToBeverage(type);
-            SessionDrinkItem drinkItem = new SessionDrinkItem(beverage, Double.parseDouble(amount), LocalDateTime.now());
-            sessionRunner.addDrinkItemToSession(drinkItem);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+        String drinkTypeInput = drinkDetails.split("_")[0];
+        String amountInput = "500";
+        Beverage beverage = convertStringToBeverage(drinkTypeInput);
+        SessionDrinkItem drinkItem = new SessionDrinkItem(beverage, Double.parseDouble(amountInput), LocalDateTime.now());
+        serverController.addDrinkToSession(drinkItem);
     }
 
     private Beverage convertStringToBeverage(String type) {

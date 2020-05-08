@@ -29,6 +29,7 @@ public class GatewayTest extends BaseTest {
             gateway.AddDrinkFromUIToServer(jsonObject.toString());
             List<SessionDrinkItem> sessionDrinkingItems = drinkingSession.getSessionDrinkingItems();
             SessionDrinkItem drinkItem = sessionDrinkingItems.get(0);
+
             assertThat(drinkItem, is(notNullValue()));
         } catch (JSONException e) {
             e.printStackTrace();
