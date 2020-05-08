@@ -22,9 +22,17 @@ public class GatewayImpl implements Gateway {
 
     private SessionRunner sessionRunner = new SessionRunnerImpl();
     private Map<String, Beverage> beverageConverterMap = Maps.newHashMap();
+    private Map<String, String> uIBeverageNameConverterMap = Maps.newHashMap();
 
     public GatewayImpl() {
         loadConverterMap();
+        loadUiBeverageNameConverterMap();
+    }
+
+    private void loadUiBeverageNameConverterMap() {
+        uIBeverageNameConverterMap.put("STRONGBEER", "STRONG_BEER");
+        uIBeverageNameConverterMap.put("NORMALBEER", "NORMAL_BEER");
+        uIBeverageNameConverterMap.put("STRONGCHASER", "STRONG_CHASER");
     }
 
     @Override

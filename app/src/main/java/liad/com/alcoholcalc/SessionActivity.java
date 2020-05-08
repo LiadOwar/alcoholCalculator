@@ -24,9 +24,9 @@ public class SessionActivity extends AppCompatActivity {
     }
 
     private void configBeverageImageViews() {
-        final ImageView StrongBeerImgView = (ImageView)findViewById(R.id.StrongBeerImg);
-        final ImageView NormalBeerImgView= (ImageView)findViewById(R.id.NormalBeerImg);
-        final ImageView StrongChaserImgView= (ImageView)findViewById(R.id.StrongChaserImg);
+        final ImageView StrongBeerImgView = (ImageView)findViewById(R.id.StrongBeer_Img);
+        final ImageView NormalBeerImgView= (ImageView)findViewById(R.id.NormalBeer_Img);
+        final ImageView StrongChaserImgView= (ImageView)findViewById(R.id.StrongChaser_Img);
         imageViews.add(StrongBeerImgView);
         imageViews.add(NormalBeerImgView);
         imageViews.add(StrongChaserImgView);

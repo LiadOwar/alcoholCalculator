@@ -37,4 +37,8 @@ dependencies {
     testCompile 'javax.annotation:javax.annotation-api:1.2-b01'
     testCompile 'junit:junit:4.12'
     testCompile 'org.json:json:20190722'
+    androidTestCompile 'junit:junit:4.12'
+    androidTestCompile "org.robolectric:robolectric:3.0"
+
+
 }

@@ -7,7 +7,7 @@
     tools:context="liad.com.alcoholcalc.SessionActivity">
 
     <ImageView
-        android:id="@+id/StrongBeerImg"
+        android:id="@+id/StrongBeer_Img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/btn_star_big_on"
@@ -15,27 +15,28 @@
         android:layout_marginTop="6dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp" />
+        android:layout_marginStart="8dp"
+        />
 
     <ImageView
-        android:id="@+id/NormalBeerImg"
+        android:id="@+id/NormalBeer_Img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/btn_star_big_off"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/StrongBeerImg"
+        app:layout_constraintTop_toBottomOf="@+id/StrongBeer_Img"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="8dp" />
 
     <ImageView
-        android:id="@+id/StrongChaserImg"
+        android:id="@+id/StrongChaser_Img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NormalBeerImg"
+        app:layout_constraintTop_toBottomOf="@+id/NormalBeer_Img"
         app:srcCompat="@android:drawable/ic_delete"
         android:layout_marginStart="8dp" />
 

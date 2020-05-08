@@ -7,7 +7,7 @@
     tools:context="liad.com.alcoholcalc.MockActivity">
 
     <ImageView
-        android:id="@+id/mock_strongbeer_icon"
+        android:id="@+id/strongbeer_icon_mock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_launcher"
