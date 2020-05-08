@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
+import com.github.anastr.speedviewlib.SpeedView;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -20,6 +21,10 @@ public class SessionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_session);
         imageViews = Lists.newArrayList();
         configBeverageImageViews();
+        SpeedView speedometer = (SpeedView)findViewById(R.id.speedView);
+
+// move to 50 Km/s
+
 
     }
 
