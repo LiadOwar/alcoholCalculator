@@ -23,27 +23,25 @@ public class SessionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_session);
         imageViews = Lists.newArrayList();
         configBeverageImageViews();
+        configureScoreGauge();
+
+
+    }
+
+    private void configureScoreGauge() {
         SpeedView speedometer = (SpeedView)findViewById(R.id.speedView);
-
-
-        speedometer.setSpeedAt(1f);
+        speedometer.setSpeedAt(0f);
         speedometer.setMinMaxSpeed(0.0f, 50f);
         speedometer.setUnit("Score");
-        speedometer.setWithTremble(true);
+        speedometer.setWithTremble(false);
         speedometer.clearSections();
-        speedometer.makeSections(2, Color.GREEN, Section.Style.ROUND);
-        Section greenSection = speedometer.getSections().get(0);
-        Section yellowSection = speedometer.getSections().get(1);
-
-        greenSection.setColor(Color.GREEN);
-        greenSection.setStartOffset(0);
-        greenSection.setEndOffset(0.3f);
-
-        yellowSection.setColor(Color.YELLOW);
-        yellowSection.setStartOffset(0.31f);
-        yellowSection.setEndOffset(1);
+        Section greenSection = new Section(0f, 0.1f, Color.GREEN, 20);
+        Section yellowSection = new Section(0.1f, 0.2f, Color.YELLOW, 20);
+        Section orangeSection = new Section(0.2f, 0.4f, Color.rgb(247, 138, 5), 20);
+        Section redSection = new Section(0.4f, 0.8f, Color.RED,20);
+        Section blackSection = new Section(0.8f, 1f, Color.BLACK,20);
+        speedometer.addSections(greenSection, yellowSection, orangeSection, redSection, blackSection);
         speedometer.setTickNumber(7);
-
 
     }
 
