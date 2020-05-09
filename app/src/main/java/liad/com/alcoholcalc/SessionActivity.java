@@ -22,10 +22,9 @@ public class SessionActivity extends AppCompatActivity {
         imageViews = Lists.newArrayList();
         configBeverageImageViews();
         SpeedView speedometer = (SpeedView)findViewById(R.id.speedView);
-
-// move to 50 Km/s
-
-
+        speedometer.setSpeedAt(1f);
+        speedometer.setMinMaxSpeed(0.0f, 50f);
+        speedometer.setUnit("AlcoScore");
     }
 
     private void configBeverageImageViews() {
