@@ -17,4 +17,7 @@ public interface SessionRunner {
     void calculateSessionStatus();
 
     void assignUserToSession(SessionUser sessionUser);
+
+    Double getAlcoholScore();
+
 }

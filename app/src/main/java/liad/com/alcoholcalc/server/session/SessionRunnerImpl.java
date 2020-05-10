@@ -100,4 +100,12 @@ public class SessionRunnerImpl implements SessionRunner {
     public void assignUserToSession(SessionUser sessionUser) {
         drinkingSession.setSessionUser(sessionUser);
     }
+
+    @Override
+    public Double getAlcoholScore() {
+        drinkingSession.setCurrentDateTime(LocalDateTime.now());
+        SessionStatus sessionStatus = drinkingSession.getSessionStatus();
+        Double alcoholScore = sessionStatus.getAlcoholScore();
+        return alcoholScore;
+    }
 }

@@ -5,8 +5,11 @@ import org.junit.Test;
 import liad.com.alcoholcalc.gateway.Gateway;
 import liad.com.alcoholcalc.gateway.GatewayImpl;
 import liad.com.alcoholcalc.server.session.SessionDrinkItem;
+import liad.com.alcoholcalc.ui.controller.UIController;
+import liad.com.alcoholcalc.ui.controller.UIControllerImpl;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -19,14 +22,30 @@ public class UIControllerTest extends BaseTest{
 
     private Gateway gateway = new GatewayImpl();
 
+    private UIController uiController = new UIControllerImpl();
+
 
     @Test
     public void AddDrinkFromUIToServer_Test() {
 
-        gateway.AddDrinkFromUIToServer("strongbeer_img");
+
+        uiController.addDrinkToSession("strongbeer_img");
         SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
         assertThat(sessionDrinkItem, is(notNullValue()));
+        assertThat(sessionDrinkItem.getBeverage(), is(notNullValue()));
+    }
 
+    @Test
+    public void getAlcoholScore1StrongBeer_10min_test() {
 
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME);
+        uiController.addDrinkToSession("strongbeer_img");
+        SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
+        sessionDrinkItem.setStartDateTime(MOCK_DATE_TIME);
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(10));
+
+        double score = uiController.getAlcoholScore();
+
+        assertThat(score, not(0d));
     }
 }

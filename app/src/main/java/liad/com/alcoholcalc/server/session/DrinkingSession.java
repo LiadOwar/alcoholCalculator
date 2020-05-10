@@ -31,6 +31,7 @@ public class DrinkingSession {
     private DrinkingSession() {
         drinkItems = Lists.newArrayList();
         this.sessionStatus = new SessionStatus();
+        currentDateTime = LocalDateTime.now();
     }
 
     public static DrinkingSession getSession() {

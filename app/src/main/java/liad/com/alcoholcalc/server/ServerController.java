@@ -9,4 +9,6 @@ import liad.com.alcoholcalc.server.session.SessionDrinkItem;
 public interface ServerController {
 
     void addDrinkToSession(SessionDrinkItem drinkItem);
+
+    Double getAlcoholScore();
 }

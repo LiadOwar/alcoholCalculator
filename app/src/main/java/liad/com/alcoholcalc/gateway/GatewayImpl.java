@@ -37,11 +37,17 @@ public class GatewayImpl implements Gateway {
     @Override
     public void AddDrinkFromUIToServer(String drinkDetails) {
 
-        String drinkTypeInput = drinkDetails.split("_")[0];
+        String drinkTypeInput = drinkDetails.split("_")[0].toUpperCase();
         String amountInput = "500";
         Beverage beverage = convertStringToBeverage(drinkTypeInput);
         SessionDrinkItem drinkItem = new SessionDrinkItem(beverage, Double.parseDouble(amountInput), LocalDateTime.now());
         serverController.addDrinkToSession(drinkItem);
+    }
+
+    @Override
+    public Double getAlcoholScore() {
+        Double score = serverController.getAlcoholScore();
+        return score;
     }
 
     private Beverage convertStringToBeverage(String type) {
@@ -49,8 +55,8 @@ public class GatewayImpl implements Gateway {
     }
 
     private void loadConverterMap() {
-        beverageConverterMap.put("STRONG_BEER", new StrongBeer());
-        beverageConverterMap.put("NORMAL_BEER", new StrongBeer());
-        beverageConverterMap.put("STRONG_CHASER", new StrongBeer());
+        beverageConverterMap.put("STRONGBEER", new StrongBeer());
+        beverageConverterMap.put("NORMALBEER", new StrongBeer());
+        beverageConverterMap.put("STRONGCHASER", new StrongBeer());
     }
 }

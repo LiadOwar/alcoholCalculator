@@ -6,4 +6,6 @@ package liad.com.alcoholcalc.gateway;
 
 public interface Gateway {
     void AddDrinkFromUIToServer(String drinkDetails);
+
+    Double getAlcoholScore();
 }

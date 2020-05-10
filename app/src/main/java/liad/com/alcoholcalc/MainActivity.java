@@ -12,15 +12,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.io.Serializable;
+
 import liad.com.alcoholcalc.converter.UIConverter;
 import liad.com.alcoholcalc.converter.UIConverterImpl;
 import liad.com.alcoholcalc.server.session.DrinkingSession;
 import liad.com.alcoholcalc.server.user.GENDER;
 import liad.com.alcoholcalc.server.user.SessionUser;
+import liad.com.alcoholcalc.ui.controller.UIController;
+import liad.com.alcoholcalc.ui.controller.UIControllerImpl;
 
 import static liad.com.alcoholcalc.R.id.submitUserBtn;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Serializable {
 
     private static final String TAG = "MyActivity";
 
@@ -28,11 +32,14 @@ public class MainActivity extends AppCompatActivity {
 
     private UIConverter uiConverter;
 
+    private UIController uiController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         drinkingSession = DrinkingSession.getSession();
         uiConverter = new UIConverterImpl();
+        uiController = new UIControllerImpl();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -95,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToSessionActivity() {
-        startActivity(new Intent(MainActivity.this, SessionActivity.class));
+        Intent intent = new Intent(MainActivity.this, SessionActivity.class);
+        startActivity(intent);
     }
 
     private boolean validateUser() {

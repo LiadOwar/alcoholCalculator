@@ -16,4 +16,11 @@ public class ServerControllerImpl implements ServerController {
     public void addDrinkToSession(SessionDrinkItem drinkItem) {
         sessionRunner.addDrinkItemToSession(drinkItem);
     }
+
+    @Override
+    public Double getAlcoholScore() {
+        sessionRunner.calculateSessionStatus();
+        Double score  = sessionRunner.getAlcoholScore();
+        return score * 100;
+    }
 }

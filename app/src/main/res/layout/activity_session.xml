@@ -45,17 +45,16 @@
         android:layout_width="320dp"
         android:layout_height="108dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/holo_orange_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.795"
-        android:background="@android:color/holo_orange_light"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintVertical_bias="0.906" />
 
     <LinearLayout
         android:id="@+id/linear_layout"
@@ -80,11 +79,22 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.351"
+        app:layout_constraintVertical_bias="0.848"
         app:sv_markColor="#FFFFFF"
         app:sv_sectionStyle="SQUARE"
         app:sv_speedTextPosition="BOTTOM_CENTER"
         app:sv_speedometerMode="NORMAL"
         app:sv_unitUnderSpeedText="true"
         app:sv_withIndicatorLight="false" />
+
+    <TextView
+        android:id="@+id/timerView"
+        android:layout_width="231dp"
+        android:layout_height="98dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/speedView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

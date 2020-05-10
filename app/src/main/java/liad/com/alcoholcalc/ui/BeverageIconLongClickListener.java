@@ -1,13 +1,11 @@
 package liad.com.alcoholcalc.ui;
 
-import android.content.Context;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 
 import liad.com.alcoholcalc.R;
+import liad.com.alcoholcalc.ui.controller.UIController;
 
 /**
  * Created by liad on 07/05/2020.
@@ -15,11 +13,22 @@ import liad.com.alcoholcalc.R;
 
 public class BeverageIconLongClickListener implements android.view.View.OnLongClickListener, PopupMenu.OnMenuItemClickListener{
 
+    private String currentSelectedDrink = null;
+
+    private UIController uiController;
+
+    public BeverageIconLongClickListener(UIController uiController) {
+        this.uiController = uiController;
+    }
+
     @Override
     public boolean onLongClick(View v) {
         showBeverageIconMenu(v);
+        Object tag = v.getTag();
+        currentSelectedDrink = tag.toString();
         return false;
     }
+
 
     private void showBeverageIconMenu(View v) {
         PopupMenu beverageMenu = new PopupMenu(v.getContext(), v);
@@ -30,10 +39,10 @@ public class BeverageIconLongClickListener implements android.view.View.OnLongCl
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        View actionView = item.getActionView();
-        ImageView imageView = new ImageView(actionView.getContext());
-        Context context = imageView.getContext();
-        LinearLayout viewById = (LinearLayout)imageView.findViewById(R.id.linear_layout);
+        uiController.addDrinkToSession(currentSelectedDrink);
+
+
+
 
         return false;
     }
