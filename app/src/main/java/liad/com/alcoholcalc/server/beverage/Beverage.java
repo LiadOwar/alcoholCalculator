@@ -20,11 +20,15 @@ public abstract class Beverage {
 
     public abstract double getAssumedConsumptionRate();
 
+    public abstract double getAlcoholConcentration();
+
+    public abstract double getAmount();
+
     public void setAssumedConsumptionRate(double assumedConsumptionRate) {
         this.assumedConsumptionRate = assumedConsumptionRate;
     }
 
-    public abstract double getAlcoholConcentration();
+
 
     public void setAlcoholConcentration(double alcoholConcentration) {
         this.assumedAlcoholConcentration = alcoholConcentration;

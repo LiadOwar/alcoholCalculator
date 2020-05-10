@@ -39,7 +39,12 @@ public class BeverageIconLongClickListener implements android.view.View.OnLongCl
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        if (currentSelectedDrink.contains("beer")) {
+
+        }
         uiController.addDrinkToSession(currentSelectedDrink);
+
         return false;
     }
+
 }
