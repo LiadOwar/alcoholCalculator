@@ -39,6 +39,9 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
 
     private final Handler handler = new Handler();
 
+    public SessionActivity() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,16 +83,19 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
                     @Override
                     public void run() {
                         updateTimerView();
-                        Double alcoholScore = uiController.getAlcoholScore();
-                        gauge.setSpeedAt(alcoholScore.floatValue());
+                        updateGauge();
                     }
                 });
             }
         };
     }
 
-    public SessionActivity() {
+    private void updateGauge() {
+        Double alcoholScore = uiController.getAlcoholScore();
+        gauge.setSpeedAt(alcoholScore.floatValue());
     }
+
+
 
     private SpeedView configureScoreGauge() {
         SpeedView speedometer = (SpeedView)findViewById(R.id.speedView);
