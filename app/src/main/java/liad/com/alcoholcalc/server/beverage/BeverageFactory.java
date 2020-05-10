@@ -15,6 +15,7 @@ public class BeverageFactory {
     public BeverageFactory() {
         beverageMap = Maps.newHashMap();
         beverageMap.put(BeverageType.STRONG_BEER, new StrongBeer());
+        beverageMap.put(BeverageType.STRONG_CHASER, new StrongChaser());
     }
 
     public Beverage getBeverage(BeverageType beverageType){

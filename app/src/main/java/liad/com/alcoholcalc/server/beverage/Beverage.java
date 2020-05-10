@@ -18,9 +18,7 @@ public abstract class Beverage {
         this.type = type;
     }
 
-    public double getAssumedConsumptionRate() {
-        return assumedConsumptionRate;
-    }
+    public abstract double getAssumedConsumptionRate();
 
     public void setAssumedConsumptionRate(double assumedConsumptionRate) {
         this.assumedConsumptionRate = assumedConsumptionRate;

@@ -48,4 +48,18 @@ public class UIControllerTest extends BaseTest{
 
         assertThat(score, not(0d));
     }
+
+    @Test
+    public void getAlcoholScore1StrongBeer_1min_test() {
+
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME);
+        uiController.addDrinkToSession("strongchaser_img");
+        SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
+        sessionDrinkItem.setStartDateTime(MOCK_DATE_TIME);
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(1));
+
+        double score = uiController.getAlcoholScore();
+
+        assertThat(score, is(0.0196));
+    }
 }

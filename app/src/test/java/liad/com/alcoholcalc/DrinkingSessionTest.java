@@ -101,6 +101,54 @@ public class DrinkingSessionTest extends BaseTest {
     }
 
     @Test
+    public void calculateConsumedAmountOfStrongChaserAfter1Min_Test() {
+        sessionRunner.startSession();
+        SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_CHASER), 30D, MOCK_DATE_TIME);
+        sessionRunner.addDrinkItemToSession(sessionDrinkItem1);
+        SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(1));
+        sessionRunner.calculateSessionStatus();
+
+        assertThat(sessionDrinkItem.getConsumedAmount(), is(30D));
+    }
+
+    @Test
+    public void calculateConsumedAmountOfStrongChaserAfter60Min_Test() {
+        sessionRunner.startSession();
+        SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_CHASER), 30D, MOCK_DATE_TIME);
+        sessionRunner.addDrinkItemToSession(sessionDrinkItem1);
+        SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(60));
+        sessionRunner.calculateSessionStatus();
+
+        assertThat(sessionDrinkItem.getConsumedAmount(), is(30D));
+    }
+
+    @Test
+    public void calculateAlcoholScoreOfStrongChaserAfter1Min_Test() {
+        sessionRunner.startSession();
+        SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_CHASER), 30D, MOCK_DATE_TIME);
+        sessionRunner.addDrinkItemToSession(sessionDrinkItem1);
+        SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(1));
+        sessionRunner.calculateSessionStatus();
+
+        assertThat(sessionRunner.getAlcoholScore(), is(0.0196));
+    }
+
+    @Test
+    public void calculateAlcoholScoreOfStrongChaserAfter40Min_Test() {
+        sessionRunner.startSession();
+        SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_CHASER), 30D, MOCK_DATE_TIME);
+        sessionRunner.addDrinkItemToSession(sessionDrinkItem1);
+        SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(41));
+        sessionRunner.calculateSessionStatus();
+
+        assertThat(sessionRunner.getAlcoholScore(), is(0.0096));
+    }
+
+    @Test
     public void stopConsumingIfDrinkIsFullyConsumed_Test() {
         sessionRunner.startSession();
         SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_BEER), 500D, MOCK_DATE_TIME);

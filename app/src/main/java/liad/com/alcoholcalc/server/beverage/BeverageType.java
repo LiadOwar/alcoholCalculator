@@ -6,7 +6,7 @@ package liad.com.alcoholcalc.server.beverage;
 
 public enum BeverageType {
 
-    STRONG_BEER, REGULAR_BEER;
+    STRONG_BEER, REGULAR_BEER, STRONG_CHASER;
 
 
 }
