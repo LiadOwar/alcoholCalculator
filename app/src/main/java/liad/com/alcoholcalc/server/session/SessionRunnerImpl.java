@@ -53,11 +53,11 @@ public class SessionRunnerImpl implements SessionRunner {
             LocalDateTime drinkItemStartDateTime = drinkItem.getStartDateTime();
             LocalDateTime currentDateTime = drinkingSession.getCurrentDateTime();
             Period deltaDateTime = Period.fieldDifference(drinkItemStartDateTime, currentDateTime);
-            int deltaTimeMinutes = deltaDateTime.toStandardMinutes().getMinutes();
+            int deltaTimeSeconds = deltaDateTime.toStandardSeconds().getSeconds();
             Beverage beverage = drinkItem.getBeverage();
             Double assumedConsumptionRate = beverage.getAssumedConsumptionRate();
             Double initialDrinkItemAmount = drinkItem.getAmount();
-            Double hypotheticalConsumedAmount = assumedConsumptionRate * deltaTimeMinutes;
+            Double hypotheticalConsumedAmount = assumedConsumptionRate * deltaTimeSeconds / 60d;
             if (hypotheticalConsumedAmount > initialDrinkItemAmount){
                 hypotheticalConsumedAmount = initialDrinkItemAmount;
             }
