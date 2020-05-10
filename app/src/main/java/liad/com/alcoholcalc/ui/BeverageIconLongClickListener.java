@@ -26,7 +26,7 @@ public class BeverageIconLongClickListener implements android.view.View.OnLongCl
         showBeverageIconMenu(v);
         Object tag = v.getTag();
         currentSelectedDrink = tag.toString();
-        return false;
+        return true;
     }
 
 
@@ -40,10 +40,6 @@ public class BeverageIconLongClickListener implements android.view.View.OnLongCl
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         uiController.addDrinkToSession(currentSelectedDrink);
-
-
-
-
         return false;
     }
 }
