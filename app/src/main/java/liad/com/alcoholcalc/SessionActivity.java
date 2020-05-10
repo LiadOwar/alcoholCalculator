@@ -19,6 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import liad.com.alcoholcalc.ui.BeverageIconLongClickListener;
+import liad.com.alcoholcalc.ui.BeverageIconOnTouchListener;
 import liad.com.alcoholcalc.ui.controller.UIController;
 import liad.com.alcoholcalc.ui.controller.UIControllerImpl;
 
@@ -121,6 +122,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         imageViews.add(strongChaserImgView);
 
         for (ImageView imageView : imageViews) {
+            imageView.setOnTouchListener(new BeverageIconOnTouchListener());
             imageView.setOnLongClickListener(new BeverageIconLongClickListener(uiController));
         }
     }
