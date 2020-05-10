@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/beer_500"
+        android:title="500ml">
+    </item>
+    <item android:id="@+id/beer_473"
+        android:title="pint(473ml)">
+    </item>
+    <item android:id="@+id/beer_330"
+        android:title="330ml">
+    </item>
+</menu>

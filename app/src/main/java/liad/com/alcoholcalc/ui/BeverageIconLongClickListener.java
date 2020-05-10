@@ -23,9 +23,14 @@ public class BeverageIconLongClickListener implements android.view.View.OnLongCl
 
     @Override
     public boolean onLongClick(View v) {
-        showBeverageIconMenu(v);
         Object tag = v.getTag();
         currentSelectedDrink = tag.toString();
+        if (currentSelectedDrink.toLowerCase().contains("beer")) {
+            showBeerSettingsMenu(v);
+        } else {
+            showBeverageIconMenu(v);
+        }
+
         return true;
     }
 
@@ -37,12 +42,27 @@ public class BeverageIconLongClickListener implements android.view.View.OnLongCl
         beverageMenu.show();
     }
 
+    private void showBeerSettingsMenu(View v) {
+        PopupMenu beerSettingsMenu = new PopupMenu(v.getContext(), v);
+        beerSettingsMenu.setOnMenuItemClickListener(this);
+        beerSettingsMenu.inflate(R.menu.beer_settings_menu);
+        beerSettingsMenu.show();
+    }
+
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if (currentSelectedDrink.contains("beer")) {
-
+        int itemId = item.getItemId();
+        Double amount = null;
+        switch (itemId) {
+            case R.id.beer_500 : amount = 500d;
+            break;
+            case R.id.beer_473 : amount = 473d;
+            break;
+            case R.id.beer_330 : amount = 330d;
+            break;
+            default: amount = null;
         }
-        uiController.addDrinkToSession(currentSelectedDrink);
+        uiController.addDrinkToSession(currentSelectedDrink+ "_" + amount);
 
         return false;
     }

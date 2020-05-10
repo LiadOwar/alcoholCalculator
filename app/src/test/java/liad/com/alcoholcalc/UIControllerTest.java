@@ -29,7 +29,7 @@ public class UIControllerTest extends BaseTest{
     public void AddDrinkFromUIToServer_Test() {
 
 
-        uiController.addDrinkToSession("strongbeer_img");
+        uiController.addDrinkToSession("strongbeer_img_500");
         SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
         assertThat(sessionDrinkItem, is(notNullValue()));
         assertThat(sessionDrinkItem.getBeverage(), is(notNullValue()));
@@ -39,7 +39,7 @@ public class UIControllerTest extends BaseTest{
     public void getAlcoholScore1StrongBeer_10min_test() {
 
         drinkingSession.setCurrentDateTime(MOCK_DATE_TIME);
-        uiController.addDrinkToSession("strongbeer_img");
+        uiController.addDrinkToSession("strongbeer_img_500");
         SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
         sessionDrinkItem.setStartDateTime(MOCK_DATE_TIME);
         drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(10));
@@ -53,13 +53,13 @@ public class UIControllerTest extends BaseTest{
     public void getAlcoholScore1StrongBeer_1min_test() {
 
         drinkingSession.setCurrentDateTime(MOCK_DATE_TIME);
-        uiController.addDrinkToSession("strongchaser_img");
+        uiController.addDrinkToSession("strongchaser_img_30");
         SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
         sessionDrinkItem.setStartDateTime(MOCK_DATE_TIME);
         drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(1));
 
         double score = uiController.getAlcoholScore();
 
-        assertThat(score, is(0.0196));
+        assertThat(score, is(1.96));
     }
 }

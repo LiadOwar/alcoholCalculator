@@ -26,7 +26,7 @@ public class GatewayTest extends BaseTest {
         try {
             jsonObject.put("type", "STRONG_BEER");
             jsonObject.put("amount", "500");
-            gateway.AddDrinkFromUIToServer(jsonObject.toString());
+            gateway.AddDrinkFromUIToServer(jsonObject);
             List<SessionDrinkItem> sessionDrinkingItems = drinkingSession.getSessionDrinkingItems();
             SessionDrinkItem drinkItem = sessionDrinkingItems.get(0);
 

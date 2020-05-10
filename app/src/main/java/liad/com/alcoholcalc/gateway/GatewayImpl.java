@@ -3,6 +3,8 @@ package liad.com.alcoholcalc.gateway;
 import com.google.common.collect.Maps;
 
 import org.joda.time.LocalDateTime;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -10,6 +12,7 @@ import liad.com.alcoholcalc.server.ServerController;
 import liad.com.alcoholcalc.server.ServerControllerImpl;
 import liad.com.alcoholcalc.server.beverage.Beverage;
 import liad.com.alcoholcalc.server.beverage.StrongBeer;
+import liad.com.alcoholcalc.server.beverage.StrongChaser;
 import liad.com.alcoholcalc.server.session.SessionDrinkItem;
 
 /**
@@ -35,13 +38,16 @@ public class GatewayImpl implements Gateway {
     }
 
     @Override
-    public void AddDrinkFromUIToServer(String drinkDetails) {
-
-        String drinkTypeInput = drinkDetails.split("_")[0].toUpperCase();
-        String amountInput = "500";
-        Beverage beverage = convertStringToBeverage(drinkTypeInput);
-        SessionDrinkItem drinkItem = new SessionDrinkItem(beverage, Double.parseDouble(amountInput), LocalDateTime.now());
-        serverController.addDrinkToSession(drinkItem);
+    public void AddDrinkFromUIToServer(JSONObject drinkDetails) {
+        try {
+            String drinkTypeInput = (String) drinkDetails.get("type");
+            String  amountInput = (String) drinkDetails.get("amount");
+            Beverage beverage = convertStringToBeverage(drinkTypeInput);
+            SessionDrinkItem drinkItem = new SessionDrinkItem(beverage, Double.parseDouble(amountInput), LocalDateTime.now());
+            serverController.addDrinkToSession(drinkItem);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -51,12 +57,12 @@ public class GatewayImpl implements Gateway {
     }
 
     private Beverage convertStringToBeverage(String type) {
-        return beverageConverterMap.get(type);
+        return beverageConverterMap.get(type.toUpperCase());
     }
 
     private void loadConverterMap() {
         beverageConverterMap.put("STRONGBEER", new StrongBeer());
         beverageConverterMap.put("NORMALBEER", new StrongBeer());
-        beverageConverterMap.put("STRONGCHASER", new StrongBeer());
+        beverageConverterMap.put("STRONGCHASER", new StrongChaser());
     }
 }
