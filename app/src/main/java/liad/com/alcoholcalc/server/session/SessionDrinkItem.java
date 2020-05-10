@@ -17,9 +17,17 @@ public class SessionDrinkItem {
 
     public SessionDrinkItem(Beverage beverage, Double amount, LocalDateTime startDateTime) {
         this.beverage = beverage;
-        this.amount = amount;
+        setDrinkAmount(amount);
         this.startDateTime = startDateTime;
         this.consumedAmount = 0D;
+    }
+
+    private void setDrinkAmount(Double amount) {
+        if (amount == 0d) {
+            this.amount = beverage.getAmount();
+        }else {
+            this.amount = amount;
+        }
     }
 
     public Beverage getBeverage() {

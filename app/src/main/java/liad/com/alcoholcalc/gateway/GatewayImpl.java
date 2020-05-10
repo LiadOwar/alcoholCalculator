@@ -41,7 +41,10 @@ public class GatewayImpl implements Gateway {
     public void AddDrinkFromUIToServer(JSONObject drinkDetails) {
         try {
             String drinkTypeInput = (String) drinkDetails.get("type");
-            String  amountInput = (String) drinkDetails.get("amount");
+            String amountInput = (String) drinkDetails.get("amount") ;
+            if (amountInput.equals("null")) {
+                amountInput = "0";
+            }
             Beverage beverage = convertStringToBeverage(drinkTypeInput);
             SessionDrinkItem drinkItem = new SessionDrinkItem(beverage, Double.parseDouble(amountInput), LocalDateTime.now());
             serverController.addDrinkToSession(drinkItem);
