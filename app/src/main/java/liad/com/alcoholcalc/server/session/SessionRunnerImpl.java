@@ -108,4 +108,9 @@ public class SessionRunnerImpl implements SessionRunner {
         Double alcoholScore = sessionStatus.getAlcoholScore();
         return alcoholScore;
     }
+
+    @Override
+    public List<SessionDrinkItem> getSessionDrinkItems() {
+        return drinkingSession.getSessionDrinkingItems();
+    }
 }

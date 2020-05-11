@@ -1,5 +1,7 @@
 package liad.com.alcoholcalc.server;
 
+import java.util.List;
+
 import liad.com.alcoholcalc.server.session.SessionDrinkItem;
 
 /**
@@ -11,4 +13,6 @@ public interface ServerController {
     void addDrinkToSession(SessionDrinkItem drinkItem);
 
     Double getAlcoholScore();
+
+    List<SessionDrinkItem> getSessionDrinks();
 }

@@ -1,5 +1,7 @@
 package liad.com.alcoholcalc.server;
 
+import java.util.List;
+
 import liad.com.alcoholcalc.server.session.SessionDrinkItem;
 import liad.com.alcoholcalc.server.session.SessionRunner;
 import liad.com.alcoholcalc.server.session.SessionRunnerImpl;
@@ -22,5 +24,10 @@ public class ServerControllerImpl implements ServerController {
         sessionRunner.calculateSessionStatus();
         Double score  = sessionRunner.getAlcoholScore();
         return score * 100;
+    }
+
+    @Override
+    public List<SessionDrinkItem> getSessionDrinks() {
+        return sessionRunner.getSessionDrinkItems();
     }
 }

@@ -1,12 +1,20 @@
 package liad.com.alcoholcalc;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
 
+import java.util.List;
+
+import liad.com.alcoholcalc.converter.UIConverter;
+import liad.com.alcoholcalc.converter.UIConverterImpl;
 import liad.com.alcoholcalc.gateway.Gateway;
 import liad.com.alcoholcalc.gateway.GatewayImpl;
+import liad.com.alcoholcalc.server.beverage.StrongBeer;
 import liad.com.alcoholcalc.server.session.SessionDrinkItem;
 import liad.com.alcoholcalc.ui.controller.UIController;
 import liad.com.alcoholcalc.ui.controller.UIControllerImpl;
+import liad.com.alcoholcalc.ui.drinkitem.UIDrinkItem;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -23,6 +31,8 @@ public class UIControllerTest extends BaseTest{
     private Gateway gateway = new GatewayImpl();
 
     private UIController uiController = new UIControllerImpl();
+
+    private UIConverter uiConverter = new UIConverterImpl();
 
 
     @Test
@@ -61,5 +71,37 @@ public class UIControllerTest extends BaseTest{
         double score = uiController.getAlcoholScore();
 
         assertThat(score, is(1.96));
+    }
+
+    @Test
+    public void convertJSONToUIDrinkItem_test() {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("type", new StrongBeer().getType().toString());
+            jsonObject.put("amount",100d);
+            jsonObject.put("drinkTime",MOCK_DATE_TIME);
+            UIDrinkItem uiDrinkItem = uiConverter.convertJSONToUIDrinkItem(jsonObject);
+            assertThat(uiDrinkItem.getDrinkType(), is("STRONG_BEER"));
+            assertThat(uiDrinkItem.getDrinkingDateTime().toString(), is(MOCK_DATE_TIME.toString()));
+            assertThat(uiDrinkItem.getAmount(), is("100.0"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getDrinkListsFromServer_1_Item_test() {
+
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME);
+        uiController.addDrinkToSession("strongchaser_img_30");
+        SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
+        sessionDrinkItem.setStartDateTime(MOCK_DATE_TIME);
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(1));
+
+        List<UIDrinkItem> drinks = uiController.getSessionDrinks();
+
+        assertThat(drinks.size(), is(1));
     }
 }

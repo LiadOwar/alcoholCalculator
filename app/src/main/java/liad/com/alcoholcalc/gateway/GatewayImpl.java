@@ -1,11 +1,13 @@
 package liad.com.alcoholcalc.gateway;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import org.joda.time.LocalDateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Map;
 
 import liad.com.alcoholcalc.server.ServerController;
@@ -57,6 +59,32 @@ public class GatewayImpl implements Gateway {
     public Double getAlcoholScore() {
         Double score = serverController.getAlcoholScore();
         return score;
+    }
+
+    @Override
+    public List<JSONObject> getSessionDrinks() {
+
+        List<SessionDrinkItem> drinks = serverController.getSessionDrinks();
+        List<JSONObject> ret = Lists.newArrayList();
+
+        for (SessionDrinkItem drinkItem: drinks) {
+            try {
+                JSONObject jsonDrinkItem = new JSONObject();
+                Beverage beverage = drinkItem.getBeverage();
+                Double amount = drinkItem.getAmount();
+                LocalDateTime drinkTime = drinkItem.getStartDateTime();
+
+                jsonDrinkItem.put("type", beverage.getType().toString());
+                jsonDrinkItem.put("amount",amount);
+                jsonDrinkItem.put("drinkTime",drinkTime);
+
+                ret.add(jsonDrinkItem);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return ret;
     }
 
     private Beverage convertStringToBeverage(String type) {

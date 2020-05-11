@@ -1,5 +1,7 @@
 package liad.com.alcoholcalc.server.session;
 
+import java.util.List;
+
 import liad.com.alcoholcalc.server.user.SessionUser;
 
 /**
@@ -19,5 +21,7 @@ public interface SessionRunner {
     void assignUserToSession(SessionUser sessionUser);
 
     Double getAlcoholScore();
+
+    List<SessionDrinkItem> getSessionDrinkItems();
 
 }
