@@ -17,6 +17,8 @@ public class BeverageIconLongClickListener implements android.view.View.OnLongCl
 
     private UIController uiController;
 
+    private float scale = 2;
+
     public BeverageIconLongClickListener(UIController uiController) {
         this.uiController = uiController;
     }
