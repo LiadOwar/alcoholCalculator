@@ -5,16 +5,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.anastr.speedviewlib.SpeedView;
 import com.github.anastr.speedviewlib.components.Section;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import org.joda.time.LocalDateTime;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,6 +25,7 @@ import liad.com.alcoholcalc.ui.BeverageIconLongClickListener;
 import liad.com.alcoholcalc.ui.BeverageIconOnTouchListener;
 import liad.com.alcoholcalc.ui.controller.UIController;
 import liad.com.alcoholcalc.ui.controller.UIControllerImpl;
+import liad.com.alcoholcalc.ui.drinkitem.UIDrinkItem;
 
 public class SessionActivity extends AppCompatActivity implements Serializable {
 
@@ -37,7 +41,11 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
 
     private TextView timerView;
 
+    private List<UIDrinkItem> currentActiveDrinks;
+
     private final Handler handler = new Handler();
+
+    private Map<String, Integer> imageMap;
 
     public SessionActivity() {
     }
@@ -51,7 +59,16 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         configBeverageImageViews();
         this.gauge = configureScoreGauge();
         this.timerView = (TextView)findViewById(R.id.timerView);
+        currentActiveDrinks = Lists.newArrayList();
+        initMapImageIconsPaths();
         updateTimerView();
+    }
+
+    private void initMapImageIconsPaths() {
+        this.imageMap = Maps.newHashMap();
+        imageMap.put("strongbeer", R.drawable.strongbeer);
+        imageMap.put("normalbeer", R.drawable.beer);
+        imageMap.put("strongchaser", R.drawable.strongchaser);
     }
 
     private void updateTimerView() {
@@ -84,10 +101,50 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
                     public void run() {
                         updateTimerView();
                         updateGauge();
+                        updateDrinksList();
                     }
                 });
             }
         };
+    }
+
+    private void updateDrinksList() {
+        List<UIDrinkItem> sessionDrinks = uiController.getSessionDrinks();
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.linear_layout);
+        for(UIDrinkItem drinkItem : sessionDrinks) {
+            ImageView imageView = createDrinkImage(drinkItem);
+            if (imageView != null) {
+                linearLayout.addView(imageView);
+            }
+        }
+    }
+
+    private ImageView createDrinkImage(UIDrinkItem drinkItem) {
+        if (isNewDrink(drinkItem)) {
+            String drinkType = drinkItem.getDrinkType();
+            String formattedDrinkType = drinkType.replace("_", "").toLowerCase();
+            ImageView drinkView = new ImageView(this);
+            drinkView.setTag(formattedDrinkType);
+            drinkView.setImageResource(imageMap.get(formattedDrinkType));
+            currentActiveDrinks.add(drinkItem);
+            return drinkView;
+        }
+
+        return null;
+    }
+
+
+    private boolean isNewDrink(UIDrinkItem drinkItem) {
+        String drinkingDateTime = drinkItem.getDrinkingDateTime();
+
+        for (UIDrinkItem activeDrinkItem : currentActiveDrinks) {
+            String drinkingDateTimeFromList = activeDrinkItem.getDrinkingDateTime();
+            if (drinkingDateTimeFromList.equals(drinkingDateTime)) {
+                return false;
+            }
+
+        }
+        return true;
     }
 
     private void updateGauge() {

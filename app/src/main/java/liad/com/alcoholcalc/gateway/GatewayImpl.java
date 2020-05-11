@@ -13,6 +13,7 @@ import java.util.Map;
 import liad.com.alcoholcalc.server.ServerController;
 import liad.com.alcoholcalc.server.ServerControllerImpl;
 import liad.com.alcoholcalc.server.beverage.Beverage;
+import liad.com.alcoholcalc.server.beverage.NormalBeer;
 import liad.com.alcoholcalc.server.beverage.StrongBeer;
 import liad.com.alcoholcalc.server.beverage.StrongChaser;
 import liad.com.alcoholcalc.server.session.SessionDrinkItem;
@@ -93,7 +94,7 @@ public class GatewayImpl implements Gateway {
 
     private void loadConverterMap() {
         beverageConverterMap.put("STRONGBEER", new StrongBeer());
-        beverageConverterMap.put("NORMALBEER", new StrongBeer());
+        beverageConverterMap.put("NORMALBEER", new NormalBeer());
         beverageConverterMap.put("STRONGCHASER", new StrongChaser());
     }
 }
