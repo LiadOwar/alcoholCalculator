@@ -10,7 +10,7 @@
         android:id="@+id/StrongBeer_Img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/btn_star_big_on"
+        app:srcCompat="@drawable/strongbeer"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="6dp"
         android:layout_marginLeft="8dp"
@@ -22,7 +22,7 @@
         android:id="@+id/NormalBeer_Img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/btn_star_big_off"
+        app:srcCompat="@drawable/beer"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/StrongBeer_Img"
         android:layout_marginLeft="8dp"
@@ -37,7 +37,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NormalBeer_Img"
-        app:srcCompat="@android:drawable/ic_delete"
+        app:srcCompat="@drawable/strongchaser"
         android:layout_marginStart="8dp" />
 
     <LinearLayout
