@@ -63,6 +63,12 @@ public class GatewayImpl implements Gateway {
     }
 
     @Override
+    public Double getFutureAlcoholScore() {
+        Double score = serverController.getFutureAlcoholScore();
+        return score;
+    }
+
+    @Override
     public List<JSONObject> getSessionDrinks() {
 
         List<SessionDrinkItem> drinks = serverController.getSessionDrinks();

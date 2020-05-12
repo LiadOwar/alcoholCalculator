@@ -46,6 +46,12 @@ public class UIControllerImpl implements UIController  {
     }
 
     @Override
+    public Double getFutureAlcoholScore() {
+        Double score = gateway.getFutureAlcoholScore();
+        return score;
+    }
+
+    @Override
     public List<UIDrinkItem> getSessionDrinks() {
         List<UIDrinkItem> ret = Lists.newArrayList();
         List<JSONObject> JSONObjects = gateway.getSessionDrinks();

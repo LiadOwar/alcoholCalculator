@@ -15,5 +15,7 @@ public interface UIController extends Serializable {
 
     double getAlcoholScore();
 
+    Double getFutureAlcoholScore();
+
     List<UIDrinkItem> getSessionDrinks();
 }

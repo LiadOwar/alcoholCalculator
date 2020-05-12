@@ -18,10 +18,13 @@ public interface SessionRunner {
 
     void calculateSessionStatus();
 
+    void calculateFutureSessionStatus();
+
     void assignUserToSession(SessionUser sessionUser);
 
     Double getAlcoholScore();
 
-    List<SessionDrinkItem> getSessionDrinkItems();
+    Double getFutureAlcoholScore();
 
+    List<SessionDrinkItem> getSessionDrinkItems();
 }

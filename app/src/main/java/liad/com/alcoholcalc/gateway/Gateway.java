@@ -9,9 +9,12 @@ import java.util.List;
  */
 
 public interface Gateway {
+
     void AddDrinkFromUIToServer(JSONObject drinkDetails);
 
     Double getAlcoholScore();
+
+    Double getFutureAlcoholScore();
 
     List<JSONObject> getSessionDrinks();
 }

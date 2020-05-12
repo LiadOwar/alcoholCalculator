@@ -35,4 +35,21 @@ public class GatewayTest extends BaseTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void calculateFutureAlcoholScore_Test() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("type", "STRONGBEER");
+            jsonObject.put("amount", "500");
+            gateway.AddDrinkFromUIToServer(jsonObject);
+            List<SessionDrinkItem> sessionDrinkingItems = drinkingSession.getSessionDrinkingItems();
+            Double score = gateway.getFutureAlcoholScore();
+            assertThat(score, is(5.16));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

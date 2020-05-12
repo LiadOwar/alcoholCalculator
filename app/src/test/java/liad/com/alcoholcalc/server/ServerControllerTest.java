@@ -33,4 +33,16 @@ public class ServerControllerTest extends BaseTest {
 
         assertThat(drinkItem, is(notNullValue()));
     }
+
+    @Test
+    public void calculateFutureScore_Test(){
+        Beverage beverage = beverageFactory.getBeverage(BeverageType.STRONG_BEER);
+        SessionDrinkItem sessionDrinkItem = new SessionDrinkItem(beverage, 500D ,MOCK_DATE_TIME);
+
+        serverController.addDrinkToSession(sessionDrinkItem);
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME);
+        Double futureAlcoholScore = serverController.getFutureAlcoholScore();
+
+        assertThat(futureAlcoholScore, is(5.13));
+    }
 }

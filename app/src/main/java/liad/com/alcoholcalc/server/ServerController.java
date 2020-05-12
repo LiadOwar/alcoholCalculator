@@ -15,4 +15,6 @@ public interface ServerController {
     Double getAlcoholScore();
 
     List<SessionDrinkItem> getSessionDrinks();
+
+    Double getFutureAlcoholScore();
 }

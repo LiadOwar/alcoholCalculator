@@ -10,6 +10,7 @@ public class SessionStatus {
 
     private LocalDateTime lastUpdateTime;
     private Double alcoholScore;
+    private Double futureAlcoholScore;
 
     public SessionStatus() {
         this.alcoholScore = 0D;
@@ -27,7 +28,15 @@ public class SessionStatus {
         return alcoholScore;
     }
 
+    public Double getFutureAlcoholScore() {
+        return futureAlcoholScore;
+    }
+
     public void setAlcoholScore(Double alcoholScore) {
         this.alcoholScore = alcoholScore;
+    }
+
+    public void setFutureAlcoholScore(Double futureAlcoholScore) {
+        this.futureAlcoholScore = futureAlcoholScore;
     }
 }

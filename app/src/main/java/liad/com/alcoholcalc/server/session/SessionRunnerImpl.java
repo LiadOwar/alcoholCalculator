@@ -1,5 +1,7 @@
 package liad.com.alcoholcalc.server.session;
 
+import android.support.annotation.NonNull;
+
 import org.joda.time.LocalDateTime;
 import org.joda.time.Period;
 
@@ -74,16 +76,76 @@ public class SessionRunnerImpl implements SessionRunner {
 
             if (rawBAC <= 0D) {
                 rawBAC = 0D;
+                drinkItem.setEtOHConsumed(true);
             }
 
-            NumberFormat formatter = new DecimalFormat("#0.0000");
-            String formattedBACString = formatter.format(rawBAC);
-            Double formattedBAC = Double.parseDouble(formattedBACString);
+            Double formattedBAC = formatBAC(rawBAC);
             BAC += formattedBAC;
         }
         SessionStatus sessionStatus = drinkingSession.getSessionStatus();
         sessionStatus.setLastUpdateTime(drinkingSession.getCurrentDateTime());
         sessionStatus.setAlcoholScore(BAC);
+    }
+
+    @NonNull
+    private Double formatBAC(Double rawBAC) {
+        NumberFormat formatter = new DecimalFormat("#0.0000");
+        String formattedBACString = formatter.format(rawBAC);
+        return Double.parseDouble(formattedBACString);
+    }
+
+    @Override
+    public void calculateFutureSessionStatus() {
+        List<SessionDrinkItem> sessionDrinkingItems = this.drinkingSession.getSessionDrinkingItems();
+        LocalDateTime tempEtOHProcessStartTime = this.drinkingSession.getStartAssumedEtOHProcessTime();
+        Double userWeightGr = drinkingSession.getSessionUser().getWeightKg()*1000;
+        Double EtOhProcessCoefficient = getEtOHProcessCoefficient();
+        Double BAC = 0D;
+        Double accumulatedGrossBAC = 0D;
+        Double potentialEtOHProcess = 0D;
+
+        for (SessionDrinkItem drinkItem : sessionDrinkingItems) {
+            if (BAC == 0D) {
+                tempEtOHProcessStartTime = drinkItem.getStartDateTime();
+            }
+            LocalDateTime drinkItemStartDateTime = drinkItem.getStartDateTime();
+            LocalDateTime futureTime = drinkingSession.getCurrentDateTime().plusMinutes(300);
+            Period deltaDateTime = Period.fieldDifference(drinkItemStartDateTime, futureTime);
+            int deltaTimeSeconds = deltaDateTime.toStandardSeconds().getSeconds();
+            Beverage beverage = drinkItem.getBeverage();
+            Double assumedConsumptionRate = beverage.getAssumedConsumptionRate();
+            Double initialDrinkItemAmount = drinkItem.getAmount();
+            Double hypotheticalConsumedAmount = assumedConsumptionRate * deltaTimeSeconds / 60d;
+            if (hypotheticalConsumedAmount > initialDrinkItemAmount){
+                hypotheticalConsumedAmount = initialDrinkItemAmount;
+            }
+            Double EtOhConcentration = beverage.getAlcoholConcentration() / 100;
+            drinkItem.setConsumedAmount(hypotheticalConsumedAmount);
+            Double rawGrossBAC = (hypotheticalConsumedAmount * EtOhConcentration * Consts.ETOH_DENSITY * 100) / (userWeightGr * EtOhProcessCoefficient);
+
+            Period deltaDateTimeEtOHProcess = Period.fieldDifference(tempEtOHProcessStartTime, futureTime);
+            int deltaDateTimeEtOHProcessMinutes = deltaDateTimeEtOHProcess.toStandardMinutes().getMinutes();
+            Double rawBAC = rawGrossBAC;
+            accumulatedGrossBAC += rawGrossBAC;
+            Double etOHProcess = deltaDateTimeEtOHProcessMinutes * Consts.ETOH_PROCESS_RATE;
+            Double deltaEtOHProcess = rawGrossBAC - etOHProcess;
+            if (deltaEtOHProcess < 0) {
+                etOHProcess = rawGrossBAC;
+            }
+            potentialEtOHProcess += etOHProcess;
+//            if (BAC == 0) {
+//                rawBAC = rawGrossBAC - (etOHProcess);
+//            }
+//
+//            if (rawBAC <= 0D) {
+//                rawBAC = 0D;
+//            }
+
+            Double formattedBAC = formatBAC(rawBAC);
+            BAC += formattedBAC;
+        }
+        SessionStatus sessionStatus = drinkingSession.getSessionStatus();
+        sessionStatus.setFutureAlcoholScore(BAC);
     }
 
     private Double getEtOHProcessCoefficient() {
@@ -106,6 +168,13 @@ public class SessionRunnerImpl implements SessionRunner {
         drinkingSession.setCurrentDateTime(LocalDateTime.now());
         SessionStatus sessionStatus = drinkingSession.getSessionStatus();
         Double alcoholScore = sessionStatus.getAlcoholScore();
+        return alcoholScore;
+    }
+
+    @Override
+    public Double getFutureAlcoholScore() {
+        SessionStatus sessionStatus = drinkingSession.getSessionStatus();
+        Double alcoholScore = sessionStatus.getFutureAlcoholScore();
         return alcoholScore;
     }
 

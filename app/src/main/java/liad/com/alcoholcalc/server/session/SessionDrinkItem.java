@@ -14,12 +14,14 @@ public class SessionDrinkItem {
     private LocalDateTime startDateTime;
     private Double amount;
     private Double consumedAmount;
+    private Boolean isEtOHConsumed;
 
     public SessionDrinkItem(Beverage beverage, Double amount, LocalDateTime startDateTime) {
         this.beverage = beverage;
         setDrinkAmount(amount);
         this.startDateTime = startDateTime;
         this.consumedAmount = 0D;
+        this.isEtOHConsumed = false;
     }
 
     private void setDrinkAmount(Double amount) {
@@ -28,6 +30,14 @@ public class SessionDrinkItem {
         }else {
             this.amount = amount;
         }
+    }
+
+    public Boolean getEtOHConsumed() {
+        return isEtOHConsumed;
+    }
+
+    public void setEtOHConsumed(Boolean etOHConsumed) {
+        isEtOHConsumed = etOHConsumed;
     }
 
     public Beverage getBeverage() {

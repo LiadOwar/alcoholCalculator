@@ -104,4 +104,18 @@ public class UIControllerTest extends BaseTest{
 
         assertThat(drinks.size(), is(1));
     }
+
+    @Test
+    public void getFutureAlcoholScore1StrongBeer_Test() {
+
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME);
+        uiController.addDrinkToSession("strongbeer_img_500");
+        SessionDrinkItem sessionDrinkItem = drinkingSession.getSessionDrinkingItems().get(0);
+        sessionDrinkItem.setStartDateTime(MOCK_DATE_TIME);
+
+
+        Double score = uiController.getFutureAlcoholScore();
+
+        assertThat(score, is(5.13d));
+    }
 }

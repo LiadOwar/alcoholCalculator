@@ -30,4 +30,11 @@ public class ServerControllerImpl implements ServerController {
     public List<SessionDrinkItem> getSessionDrinks() {
         return sessionRunner.getSessionDrinkItems();
     }
+
+    @Override
+    public Double getFutureAlcoholScore() {
+        sessionRunner.calculateFutureSessionStatus();
+        Double score  = sessionRunner.getFutureAlcoholScore();
+        return score * 100;
+    }
 }

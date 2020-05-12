@@ -41,6 +41,8 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
 
     private SpeedView gauge;
 
+    private SpeedView futureGauge;
+
     private TextView timerView;
 
     private List<UIDrinkItem> currentActiveDrinks;
@@ -60,7 +62,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         imageViews = Lists.newArrayList();
         configBeverageImageViews();
         this.gauge = configureScoreGauge();
-        configureFutureGauge();
+        this.futureGauge = configureFutureGauge();
         this.timerView = (TextView)findViewById(R.id.timerView);
         currentActiveDrinks = Lists.newArrayList();
         initMapImageIconsPaths();
@@ -104,6 +106,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
                     public void run() {
                         updateTimerView();
                         updateGauge();
+                        updateFutureGauge();
                         updateDrinksList();
                     }
                 });
@@ -155,6 +158,11 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         gauge.setSpeedAt(alcoholScore.floatValue());
     }
 
+    private void updateFutureGauge() {
+        Double alcoholScore = uiController.getFutureAlcoholScore();
+        futureGauge.setSpeedAt(alcoholScore.floatValue());
+    }
+
 
 
     private SpeedView configureScoreGauge() {
@@ -188,9 +196,6 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         }
         speedometer.setIndicator(Indicator.Indicators.NeedleIndicator);
         speedometer.getIndicator().setColor(Color.RED);
-
-
-
 
         return speedometer;
     }
