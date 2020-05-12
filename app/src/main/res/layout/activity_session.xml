@@ -42,23 +42,39 @@
 
     <LinearLayout
         android:id="@+id/linear_layout"
-        android:layout_width="320dp"
-        android:layout_height="103dp"
+        android:layout_width="300dp"
+        android:layout_height="63dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.626"
+        app:layout_constraintHorizontal_bias="0.604"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/speedView"
-        app:layout_constraintVertical_bias="0.277"></LinearLayout>
+        app:layout_constraintVertical_bias="0.067"></LinearLayout>
 
     <com.github.anastr.speedviewlib.SpeedView
         android:id="@+id/speedView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="68dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.546"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:sv_markColor="#FFFFFF"
+        app:sv_sectionStyle="SQUARE"
+        app:sv_speedTextPosition="BOTTOM_CENTER"
+        app:sv_speedometerMode="NORMAL"
+        app:sv_unitUnderSpeedText="true"
+        app:sv_withIndicatorLight="false" />
+
+    <com.github.anastr.speedviewlib.SpeedView
+        android:id="@+id/futureSpeedView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:sv_markColor="#FFFFFF"
@@ -70,12 +86,12 @@
 
     <TextView
         android:id="@+id/timerView"
-        android:layout_width="231dp"
-        android:layout_height="98dp"
+        android:layout_width="237dp"
+        android:layout_height="32dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/speedView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.148" />
 </android.support.constraint.ConstraintLayout>

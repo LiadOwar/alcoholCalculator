@@ -10,12 +10,14 @@ import android.widget.TextView;
 
 import com.github.anastr.speedviewlib.SpeedView;
 import com.github.anastr.speedviewlib.components.Section;
+import com.github.anastr.speedviewlib.components.indicators.Indicator;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import org.joda.time.LocalDateTime;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -58,6 +60,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         imageViews = Lists.newArrayList();
         configBeverageImageViews();
         this.gauge = configureScoreGauge();
+        configureFutureGauge();
         this.timerView = (TextView)findViewById(R.id.timerView);
         currentActiveDrinks = Lists.newArrayList();
         initMapImageIconsPaths();
@@ -168,6 +171,26 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         Section blackSection = new Section(0.8f, 1f, Color.BLACK,20);
         speedometer.addSections(greenSection, yellowSection, orangeSection, redSection, blackSection);
         speedometer.setTickNumber(7);
+
+        return speedometer;
+    }
+
+    private SpeedView configureFutureGauge() {
+        SpeedView speedometer = (SpeedView)findViewById(R.id.futureSpeedView);
+        speedometer.setSpeedAt(0f);
+        speedometer.setMinMaxSpeed(0.0f, 50f);
+        speedometer.setWithTremble(false);
+        speedometer.setUnitTextColor(android.R.color.transparent);
+        speedometer.setSpeedTextColor(android.R.color.transparent);
+        ArrayList<Section> sections = speedometer.getSections();
+        for (Section section : sections) {
+            section.setColor(android.R.color.transparent);
+        }
+        speedometer.setIndicator(Indicator.Indicators.NeedleIndicator);
+        speedometer.getIndicator().setColor(Color.RED);
+
+
+
 
         return speedometer;
     }
