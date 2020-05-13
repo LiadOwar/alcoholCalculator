@@ -128,7 +128,7 @@ public class AlcoholScoreTest extends BaseTest {
     }
 
     @Test
-    public void calculateScore20StrongChasers_5hours_Test() {
+    public void calculateScore10StrongChasers_5hours_Test() {
         drinkingSession.setSessionUser(defaultManUser);
         sessionRunner.startSession();
         for (int i = 0 ; i < 10 ; i++) {
@@ -142,6 +142,6 @@ public class AlcoholScoreTest extends BaseTest {
         SessionStatus sessionStatus = drinkingSession.getSessionStatus();
         Double alcoholScore = sessionStatus.getAlcoholScore();
 
-        assertThat(alcoholScore, is(0.14));
+        assertThat(alcoholScore, is(0.1239));
     }
 }

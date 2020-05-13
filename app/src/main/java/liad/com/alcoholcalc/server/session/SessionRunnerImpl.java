@@ -47,44 +47,96 @@ public class SessionRunnerImpl implements SessionRunner {
         Double userWeightGr = drinkingSession.getSessionUser().getWeightKg()*1000;
         Double EtOhProcessCoefficient = getEtOHProcessCoefficient();
         Double BAC = 0D;
+        Double accumulatedHypotheticalBAC = 0D;
+        Double potentialEtOHProcess = 0D;
 
-        for (SessionDrinkItem drinkItem : sessionDrinkingItems) {
-            if (BAC == 0D) {
-                tempEtOHProcessStartTime = drinkItem.getStartDateTime();
-            }
-            LocalDateTime drinkItemStartDateTime = drinkItem.getStartDateTime();
-            LocalDateTime currentDateTime = drinkingSession.getCurrentDateTime();
-            Period deltaDateTime = Period.fieldDifference(drinkItemStartDateTime, currentDateTime);
-            int deltaTimeSeconds = deltaDateTime.toStandardSeconds().getSeconds();
-            Beverage beverage = drinkItem.getBeverage();
-            Double assumedConsumptionRate = beverage.getAssumedConsumptionRate();
-            Double initialDrinkItemAmount = drinkItem.getAmount();
-            Double hypotheticalConsumedAmount = assumedConsumptionRate * deltaTimeSeconds / 60d;
-            if (hypotheticalConsumedAmount > initialDrinkItemAmount){
-                hypotheticalConsumedAmount = initialDrinkItemAmount;
-            }
-            Double EtOhConcentration = beverage.getAlcoholConcentration() / 100;
-                    drinkItem.setConsumedAmount(hypotheticalConsumedAmount);
-            Double rawGrossBAC = (hypotheticalConsumedAmount * EtOhConcentration * Consts.ETOH_DENSITY * 100) / (userWeightGr * EtOhProcessCoefficient);
+        for (int i = 0 ; i < sessionDrinkingItems.size() ; ++i) {
 
-            Period deltaDateTimeEtOHProcess = Period.fieldDifference(tempEtOHProcessStartTime, currentDateTime);
-            int deltaDateTimeEtOHProcessMinutes = deltaDateTimeEtOHProcess.toStandardMinutes().getMinutes();
-            Double rawBAC = rawGrossBAC;
-            if (BAC == 0) {
-                rawBAC = rawGrossBAC - (deltaDateTimeEtOHProcessMinutes * Consts.ETOH_PROCESS_RATE);
+            SessionDrinkItem currentDrinkItem = sessionDrinkingItems.get(i);
+            SessionDrinkItem nextDrinkItem = getNextDrinkItem(i, sessionDrinkingItems);
+
+            LocalDateTime drinkItemStartDateTime = currentDrinkItem.getStartDateTime();
+            LocalDateTime nextTimePoint = drinkingSession.getCurrentDateTime();
+            if (nextDrinkItem != null) {
+                nextTimePoint = nextDrinkItem.getStartDateTime();
+            }
+            Period deltaTime =  Period.fieldDifference(drinkItemStartDateTime, nextTimePoint);
+            int deltaTimeMinutes = deltaTime.toStandardMinutes().getMinutes();
+            Double hypotheticalGrossBAC = getHypotheticalGrossBAC(userWeightGr,
+                                    EtOhProcessCoefficient, currentDrinkItem);
+            Double potentialEtOHConsumed = deltaTimeMinutes * Consts.ETOH_PROCESS_RATE;
+            accumulatedHypotheticalBAC += (hypotheticalGrossBAC - potentialEtOHConsumed) ;
+
+            if (accumulatedHypotheticalBAC < 0D) {
+                accumulatedHypotheticalBAC = 0D;
             }
 
-            if (rawBAC <= 0D) {
-                rawBAC = 0D;
-                drinkItem.setEtOHConsumed(true);
-            }
-
-            Double formattedBAC = formatBAC(rawBAC);
-            BAC += formattedBAC;
+//
+//
+//
+//            if (BAC == 0D) {
+//                tempEtOHProcessStartTime = currentDrinkItem.getStartDateTime();
+//            }
+//
+//
+//            int deltaTimeSeconds = getDeltaTimeSeconds(drinkItemStartDateTime, nextTimePoint);
+//            Beverage beverage = currentDrinkItem.getBeverage();
+//            Double assumedConsumptionRate = beverage.getAssumedConsumptionRate();
+//            Double initialDrinkItemAmount = currentDrinkItem.getAmount();
+//            Double hypotheticalConsumedAmount = getConsumedAmount(deltaTimeSeconds, assumedConsumptionRate, initialDrinkItemAmount);
+//
+//
+//            Period deltaDateTimeEtOHProcess = Period.fieldDifference(tempEtOHProcessStartTime, nextTimePoint);
+//            accumulatedGrossBAC += rawGrossBAC;
+//            Double potentialEtOHProcessAmount = getPotentialEtOHConsumedAmount(rawGrossBAC, deltaDateTimeEtOHProcess);
+//
+//            int deltaDateTimeEtOHProcessMinutes = deltaDateTimeEtOHProcess.toStandardMinutes().getMinutes();
+//            Double rawBAC = rawGrossBAC;
+//            if (BAC == 0) {
+//                rawBAC = rawGrossBAC - (deltaDateTimeEtOHProcessMinutes * Consts.ETOH_PROCESS_RATE);
+//            }
+//
+//            if (rawBAC <= 0D) {
+//                rawBAC = 0D;
+//                currentDrinkItem.setEtOHConsumed(true);
+//            }
+//
+//
+//            Double formattedBAC = formatBAC(rawBAC);
+//            BAC += formattedBAC;
         }
+        Double formattedBAC = formatBAC(accumulatedHypotheticalBAC);
         SessionStatus sessionStatus = drinkingSession.getSessionStatus();
         sessionStatus.setLastUpdateTime(drinkingSession.getCurrentDateTime());
-        sessionStatus.setAlcoholScore(BAC);
+        sessionStatus.setAlcoholScore(formattedBAC);
+    }
+
+    private SessionDrinkItem getNextDrinkItem(int i, List<SessionDrinkItem> sessionDrinkingItems) {
+        if (i >= sessionDrinkingItems.size() - 1) {
+            return null;
+        }
+        SessionDrinkItem nextDrinkItem = sessionDrinkingItems.get(i + 1);
+        return nextDrinkItem;
+    }
+
+    private Double getPotentialEtOHConsumedAmount(int deltaTimeMinutes) {
+
+        Double potentialEtOHConsumed = deltaTimeMinutes * Consts.ETOH_PROCESS_RATE;
+        return potentialEtOHConsumed;
+    }
+
+    private int getDeltaTimeSeconds(LocalDateTime drinkItemStartDateTime, LocalDateTime currentDateTime) {
+        Period deltaDateTime = Period.fieldDifference(drinkItemStartDateTime, currentDateTime);
+        return deltaDateTime.toStandardSeconds().getSeconds();
+    }
+
+    @NonNull
+    private Double getConsumedAmount(int deltaTimeSeconds, Double assumedConsumptionRate, Double initialDrinkItemAmount) {
+        Double hypotheticalConsumedAmount = assumedConsumptionRate * deltaTimeSeconds / 60d;
+        if (hypotheticalConsumedAmount > initialDrinkItemAmount) {
+            hypotheticalConsumedAmount = initialDrinkItemAmount;
+        }
+        return hypotheticalConsumedAmount;
     }
 
     @NonNull
@@ -101,51 +153,76 @@ public class SessionRunnerImpl implements SessionRunner {
         Double userWeightGr = drinkingSession.getSessionUser().getWeightKg()*1000;
         Double EtOhProcessCoefficient = getEtOHProcessCoefficient();
         Double BAC = 0D;
-        Double accumulatedGrossBAC = 0D;
+        Double accumulatedHypotheticalBAC = 0D;
         Double potentialEtOHProcess = 0D;
 
-        for (SessionDrinkItem drinkItem : sessionDrinkingItems) {
-            if (BAC == 0D) {
-                tempEtOHProcessStartTime = drinkItem.getStartDateTime();
-            }
-            LocalDateTime drinkItemStartDateTime = drinkItem.getStartDateTime();
-            LocalDateTime futureTime = drinkingSession.getCurrentDateTime().plusMinutes(300);
-            Period deltaDateTime = Period.fieldDifference(drinkItemStartDateTime, futureTime);
-            int deltaTimeSeconds = deltaDateTime.toStandardSeconds().getSeconds();
-            Beverage beverage = drinkItem.getBeverage();
-            Double assumedConsumptionRate = beverage.getAssumedConsumptionRate();
-            Double initialDrinkItemAmount = drinkItem.getAmount();
-            Double hypotheticalConsumedAmount = assumedConsumptionRate * deltaTimeSeconds / 60d;
-            if (hypotheticalConsumedAmount > initialDrinkItemAmount){
-                hypotheticalConsumedAmount = initialDrinkItemAmount;
-            }
-            Double EtOhConcentration = beverage.getAlcoholConcentration() / 100;
-            drinkItem.setConsumedAmount(hypotheticalConsumedAmount);
-            Double rawGrossBAC = (hypotheticalConsumedAmount * EtOhConcentration * Consts.ETOH_DENSITY * 100) / (userWeightGr * EtOhProcessCoefficient);
+        for (int i = 0 ; i < sessionDrinkingItems.size() ; ++i) {
 
-            Period deltaDateTimeEtOHProcess = Period.fieldDifference(tempEtOHProcessStartTime, futureTime);
-            int deltaDateTimeEtOHProcessMinutes = deltaDateTimeEtOHProcess.toStandardMinutes().getMinutes();
-            Double rawBAC = rawGrossBAC;
-            accumulatedGrossBAC += rawGrossBAC;
-            Double etOHProcess = deltaDateTimeEtOHProcessMinutes * Consts.ETOH_PROCESS_RATE;
-            Double deltaEtOHProcess = rawGrossBAC - etOHProcess;
-            if (deltaEtOHProcess < 0) {
-                etOHProcess = rawGrossBAC;
+            SessionDrinkItem currentDrinkItem = sessionDrinkingItems.get(i);
+            SessionDrinkItem nextDrinkItem = getNextDrinkItem(i, sessionDrinkingItems);
+
+            LocalDateTime drinkItemStartDateTime = currentDrinkItem.getStartDateTime();
+            LocalDateTime nextTimePoint = drinkingSession.getCurrentDateTime().plusHours(1);
+            if (nextDrinkItem != null) {
+                nextTimePoint = nextDrinkItem.getStartDateTime();
             }
-            potentialEtOHProcess += etOHProcess;
+            Period deltaTime =  Period.fieldDifference(drinkItemStartDateTime, nextTimePoint);
+            int deltaTimeMinutes = deltaTime.toStandardMinutes().getMinutes();
+            Double hypotheticalGrossBAC = getHypotheticalGrossBAC(userWeightGr,
+                    EtOhProcessCoefficient, currentDrinkItem);
+            Double potentialEtOHConsumed = deltaTimeMinutes * Consts.ETOH_PROCESS_RATE;
+            accumulatedHypotheticalBAC += (hypotheticalGrossBAC - potentialEtOHConsumed) ;
+
+            if (accumulatedHypotheticalBAC < 0D) {
+                accumulatedHypotheticalBAC = 0D;
+            }
+
+//
+//
+//
+//            if (BAC == 0D) {
+//                tempEtOHProcessStartTime = currentDrinkItem.getStartDateTime();
+//            }
+//
+//
+//            int deltaTimeSeconds = getDeltaTimeSeconds(drinkItemStartDateTime, nextTimePoint);
+//            Beverage beverage = currentDrinkItem.getBeverage();
+//            Double assumedConsumptionRate = beverage.getAssumedConsumptionRate();
+//            Double initialDrinkItemAmount = currentDrinkItem.getAmount();
+//            Double hypotheticalConsumedAmount = getConsumedAmount(deltaTimeSeconds, assumedConsumptionRate, initialDrinkItemAmount);
+//
+//
+//            Period deltaDateTimeEtOHProcess = Period.fieldDifference(tempEtOHProcessStartTime, nextTimePoint);
+//            accumulatedGrossBAC += rawGrossBAC;
+//            Double potentialEtOHProcessAmount = getPotentialEtOHConsumedAmount(rawGrossBAC, deltaDateTimeEtOHProcess);
+//
+//            int deltaDateTimeEtOHProcessMinutes = deltaDateTimeEtOHProcess.toStandardMinutes().getMinutes();
+//            Double rawBAC = rawGrossBAC;
 //            if (BAC == 0) {
-//                rawBAC = rawGrossBAC - (etOHProcess);
+//                rawBAC = rawGrossBAC - (deltaDateTimeEtOHProcessMinutes * Consts.ETOH_PROCESS_RATE);
 //            }
 //
 //            if (rawBAC <= 0D) {
 //                rawBAC = 0D;
+//                currentDrinkItem.setEtOHConsumed(true);
 //            }
-
-            Double formattedBAC = formatBAC(rawBAC);
-            BAC += formattedBAC;
+//
+//
+//            Double formattedBAC = formatBAC(rawBAC);
+//            BAC += formattedBAC;
         }
+        Double formattedBAC = formatBAC(accumulatedHypotheticalBAC);
         SessionStatus sessionStatus = drinkingSession.getSessionStatus();
-        sessionStatus.setFutureAlcoholScore(BAC);
+        sessionStatus.setLastUpdateTime(drinkingSession.getCurrentDateTime());
+        sessionStatus.setFutureAlcoholScore(formattedBAC);
+    }
+
+    private Double getHypotheticalGrossBAC(Double userWeightGr, Double etOhProcessCoefficient, SessionDrinkItem drinkItem) {
+        Beverage beverage = drinkItem.getBeverage();
+        Double amount = drinkItem.getAmount();
+        Double EtOhConcentration = beverage.getAlcoholConcentration() / 100;
+
+        return (amount * EtOhConcentration * Consts.ETOH_DENSITY * 100) / (userWeightGr * etOhProcessCoefficient);
     }
 
     private Double getEtOHProcessCoefficient() {
