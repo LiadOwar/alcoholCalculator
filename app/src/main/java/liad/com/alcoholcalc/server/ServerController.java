@@ -17,4 +17,6 @@ public interface ServerController {
     List<SessionDrinkItem> getSessionDrinks();
 
     Double getFutureAlcoholScore();
+
+    void addTimeToCurrentTime(int min);
 }

@@ -17,4 +17,6 @@ public interface Gateway {
     Double getFutureAlcoholScore();
 
     List<JSONObject> getSessionDrinks();
+
+    void addTimeToCurrentTime(int min);
 }

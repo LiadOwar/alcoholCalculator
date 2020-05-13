@@ -128,6 +128,23 @@ public class AlcoholScoreTest extends BaseTest {
     }
 
     @Test
+    public void calculateScore2StrongBeers300min_Test() {
+        drinkingSession.setSessionUser(defaultManUser);
+        sessionRunner.startSession();
+        SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_BEER), 500D, MOCK_DATE_TIME);
+        SessionDrinkItem sessionDrinkItem2 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_BEER), 500D, MOCK_DATE_TIME);
+        sessionRunner.addDrinkItemToSession(sessionDrinkItem1);
+        sessionRunner.addDrinkItemToSession(sessionDrinkItem2);
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(300));
+        sessionRunner.calculateSessionStatus();
+        SessionStatus sessionStatus = drinkingSession.getSessionStatus();
+        Double alcoholScore = sessionStatus.getAlcoholScore();
+
+        assertThat(alcoholScore, is(0.0576D));
+    }
+
+
+    @Test
     public void calculateScore10StrongChasers_5hours_Test() {
         drinkingSession.setSessionUser(defaultManUser);
         sessionRunner.startSession();

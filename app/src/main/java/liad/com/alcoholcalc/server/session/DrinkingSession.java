@@ -18,7 +18,18 @@ public class DrinkingSession {
     private List<SessionDrinkItem> drinkItems;
     private boolean isActive;
     private SessionStatus sessionStatus;
-    private LocalDateTime currentDateTime;
+    private volatile LocalDateTime currentDateTime;
+    private static Object mutex = new Object();
+
+    public Integer getFastForwardClickCounter() {
+        return fastForwardClickCounter;
+    }
+
+    public void setFastForwardClickCounter(Integer fastForwardClickCounter) {
+        this.fastForwardClickCounter = fastForwardClickCounter;
+    }
+
+    private Integer fastForwardClickCounter;
 
     public LocalDateTime getStartAssumedEtOHProcessTime() {
         return assumedStartEtOHProcessTime;
@@ -26,20 +37,26 @@ public class DrinkingSession {
 
     private LocalDateTime assumedStartEtOHProcessTime;
     private SessionUser sessionUser;
-    private static DrinkingSession drinkingSession;
+    private static volatile DrinkingSession drinkingSession;
 
     private DrinkingSession() {
         drinkItems = Lists.newArrayList();
         this.sessionStatus = new SessionStatus();
         currentDateTime = LocalDateTime.now();
+        fastForwardClickCounter = 0;
     }
 
     public static DrinkingSession getSession() {
-        if (drinkingSession == null) {
-            drinkingSession = new DrinkingSession();
-            return drinkingSession;
+        DrinkingSession result = drinkingSession;
+        if (result == null) {
+            synchronized (mutex) {
+                result = drinkingSession;
+                if(result == null) {
+                    result = drinkingSession = new DrinkingSession();
+                }
+            }
         }
-        return drinkingSession;
+        return result;
     }
 
     public void addSessionDrinkItem(SessionDrinkItem drinkItem) {
@@ -62,11 +79,15 @@ public class DrinkingSession {
     }
 
     public LocalDateTime getCurrentDateTime() {
-        return currentDateTime;
+        synchronized (mutex) {
+            return currentDateTime;
+        }
     }
 
     public void setCurrentDateTime(LocalDateTime currentDateTime) {
-        this.currentDateTime = currentDateTime;
+        synchronized (mutex) {
+            this.currentDateTime = currentDateTime;
+        }
     }
 
     public void setActive(boolean active) {

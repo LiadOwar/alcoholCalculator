@@ -107,7 +107,7 @@ public class SessionRunnerImpl implements SessionRunner {
         }
         Double formattedBAC = formatBAC(accumulatedHypotheticalBAC);
         SessionStatus sessionStatus = drinkingSession.getSessionStatus();
-        sessionStatus.setLastUpdateTime(drinkingSession.getCurrentDateTime());
+//        sessionStatus.setLastUpdateTime(drinkingSession.getCurrentDateTime());
         sessionStatus.setAlcoholScore(formattedBAC);
     }
 
@@ -242,7 +242,8 @@ public class SessionRunnerImpl implements SessionRunner {
 
     @Override
     public Double getAlcoholScore() {
-        drinkingSession.setCurrentDateTime(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        drinkingSession.setCurrentDateTime(now.plusMinutes(drinkingSession.getFastForwardClickCounter() * 5));
         SessionStatus sessionStatus = drinkingSession.getSessionStatus();
         Double alcoholScore = sessionStatus.getAlcoholScore();
         return alcoholScore;
@@ -258,5 +259,10 @@ public class SessionRunnerImpl implements SessionRunner {
     @Override
     public List<SessionDrinkItem> getSessionDrinkItems() {
         return drinkingSession.getSessionDrinkingItems();
+    }
+
+    @Override
+    public void addTimeToCurrentTime(int clickCount) {
+        drinkingSession.setFastForwardClickCounter(clickCount);
     }
 }

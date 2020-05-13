@@ -62,4 +62,9 @@ public class UIControllerImpl implements UIController  {
         }
         return ret;
     }
+
+    @Override
+    public void addTimeToCurrentTime(int clickCount) {
+        gateway.addTimeToCurrentTime(clickCount);
+    }
 }

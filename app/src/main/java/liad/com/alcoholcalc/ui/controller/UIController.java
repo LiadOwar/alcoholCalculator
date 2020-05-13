@@ -18,4 +18,6 @@ public interface UIController extends Serializable {
     Double getFutureAlcoholScore();
 
     List<UIDrinkItem> getSessionDrinks();
+
+    void addTimeToCurrentTime(int min);
 }

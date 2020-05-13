@@ -37,4 +37,9 @@ public class ServerControllerImpl implements ServerController {
         Double score  = sessionRunner.getFutureAlcoholScore();
         return score * 100;
     }
+
+    @Override
+    public void addTimeToCurrentTime(int clickCount) {
+        sessionRunner.addTimeToCurrentTime(clickCount);
+    }
 }

@@ -94,6 +94,11 @@ public class GatewayImpl implements Gateway {
         return ret;
     }
 
+    @Override
+    public void addTimeToCurrentTime(int clickCount) {
+        serverController.addTimeToCurrentTime(clickCount);
+    }
+
     private Beverage convertStringToBeverage(String type) {
         return beverageConverterMap.get(type.toUpperCase());
     }

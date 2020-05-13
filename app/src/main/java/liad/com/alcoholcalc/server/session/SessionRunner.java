@@ -27,4 +27,6 @@ public interface SessionRunner {
     Double getFutureAlcoholScore();
 
     List<SessionDrinkItem> getSessionDrinkItems();
+
+    void addTimeToCurrentTime(int min);
 }

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import liad.com.alcoholcalc.server.session.DrinkingSession;
 import liad.com.alcoholcalc.ui.BeverageIconLongClickListener;
 import liad.com.alcoholcalc.ui.BeverageIconOnTouchListener;
 import liad.com.alcoholcalc.ui.controller.UIController;
@@ -51,6 +53,8 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
 
     private Map<String, Integer> imageMap;
 
+    private Integer fastForwardClickCounter;
+
     public SessionActivity() {
     }
 
@@ -67,6 +71,19 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         currentActiveDrinks = Lists.newArrayList();
         initMapImageIconsPaths();
         updateTimerView();
+        initFastForward();
+    }
+
+    private void initFastForward() {
+        ImageView ffView = (ImageView)findViewById(R.id.fastForwardView);
+        fastForwardClickCounter = 0;
+        ffView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ++fastForwardClickCounter;
+                uiController.addTimeToCurrentTime(fastForwardClickCounter);
+            }
+        });
     }
 
     private void initMapImageIconsPaths() {
@@ -77,7 +94,8 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
     }
 
     private void updateTimerView() {
-        LocalDateTime localDateTime = LocalDateTime.now();
+//        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime localDateTime = DrinkingSession.getSession().getCurrentDateTime();
         int hourOfDay = localDateTime.getHourOfDay();
         int minuteOfHour = localDateTime.getMinuteOfHour();
         int secondOfMinute = localDateTime.getSecondOfMinute();
