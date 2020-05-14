@@ -20,4 +20,7 @@ public interface UIController extends Serializable {
     List<UIDrinkItem> getSessionDrinks();
 
     void addTimeToCurrentTime(int min);
+
+
+    void cleatSession();
 }

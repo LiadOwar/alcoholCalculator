@@ -19,4 +19,6 @@ public interface Gateway {
     List<JSONObject> getSessionDrinks();
 
     void addTimeToCurrentTime(int min);
+
+    void cleatSession();
 }

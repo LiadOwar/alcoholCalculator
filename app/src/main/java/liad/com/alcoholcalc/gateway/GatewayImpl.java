@@ -99,6 +99,11 @@ public class GatewayImpl implements Gateway {
         serverController.addTimeToCurrentTime(clickCount);
     }
 
+    @Override
+    public void cleatSession() {
+        serverController.clearSession();
+    }
+
     private Beverage convertStringToBeverage(String type) {
         return beverageConverterMap.get(type.toUpperCase());
     }

@@ -3,8 +3,11 @@ package liad.com.alcoholcalc;
 import org.joda.time.LocalDateTime;
 import org.junit.After;
 
+import liad.com.alcoholcalc.server.beverage.Beverage;
 import liad.com.alcoholcalc.server.beverage.BeverageFactory;
+import liad.com.alcoholcalc.server.beverage.BeverageType;
 import liad.com.alcoholcalc.server.session.DrinkingSession;
+import liad.com.alcoholcalc.server.session.SessionDrinkItem;
 import liad.com.alcoholcalc.server.session.SessionRunner;
 import liad.com.alcoholcalc.server.session.SessionRunnerImpl;
 import liad.com.alcoholcalc.utils.TestFactory;
@@ -36,4 +39,20 @@ public class BaseTest {
         this.sessionRunner = new SessionRunnerImpl();
         this.testFactory = new TestFactory();
     }
+
+    protected DrinkingSession createDefaultDrinkingSession(){
+
+        SessionDrinkItem sessionDrinkItem = createSessionDrinkItem(BeverageType.STRONG_BEER, 500D, MOCK_DATE_TIME);
+        drinkingSession.addSessionDrinkItem(sessionDrinkItem);
+
+        return drinkingSession;
+    }
+
+    protected SessionDrinkItem createSessionDrinkItem(BeverageType beverageType, Double amount, LocalDateTime dateTime) {
+        Beverage beverage = beverageFactory.getBeverage(beverageType);
+        SessionDrinkItem sessionDrinkItem = new SessionDrinkItem(beverage, amount, dateTime);
+
+        return sessionDrinkItem;
+    }
+
 }

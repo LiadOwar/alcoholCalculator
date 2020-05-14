@@ -4,41 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     tools:context="liad.com.alcoholcalc.SessionActivity">
 
     <ImageView
         android:id="@+id/StrongBeer_Img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/strongbeer"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="8dp"
-        />
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/strongbeer" />
 
     <ImageView
         android:id="@+id/NormalBeer_Img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/beer"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/StrongBeer_Img"
+        android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/StrongBeer_Img"
+        app:srcCompat="@drawable/beer" />
 
     <ImageView
         android:id="@+id/StrongChaser_Img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NormalBeer_Img"
-        app:srcCompat="@drawable/strongchaser"
-        android:layout_marginStart="8dp" />
+        app:srcCompat="@drawable/strongchaser" />
 
     <LinearLayout
         android:id="@+id/linear_layout"
@@ -56,7 +56,7 @@
         android:id="@+id/speedView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,9 +72,9 @@
         android:id="@+id/futureSpeedView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.546"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:sv_markColor="#FFFFFF"
@@ -86,14 +86,15 @@
 
     <TextView
         android:id="@+id/timerView"
-        android:layout_width="237dp"
-        android:layout_height="32dp"
+        android:layout_width="97dp"
+        android:layout_height="21dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/speedView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.277"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.148" />
+        app:layout_constraintVertical_bias="0.127" />
 
     <ImageView
         android:id="@+id/fastForwardView"
@@ -103,9 +104,22 @@
         android:layout_marginLeft="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toEndOf="@+id/timerView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022"
+        app:layout_constraintVertical_bias="0.008"
         app:srcCompat="@android:drawable/ic_media_ff" />
+
+    <Button
+        android:id="@+id/clearSessionBtn"
+        style="@android:style/Widget.Material.Light.Button.Small"
+        android:layout_width="31dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:drawable/ic_menu_delete"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.805"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fastForwardView" />
 </android.support.constraint.ConstraintLayout>

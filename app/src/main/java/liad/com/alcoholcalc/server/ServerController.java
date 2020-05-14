@@ -19,4 +19,6 @@ public interface ServerController {
     Double getFutureAlcoholScore();
 
     void addTimeToCurrentTime(int min);
+
+    void clearSession();
 }

@@ -29,4 +29,6 @@ public interface SessionRunner {
     List<SessionDrinkItem> getSessionDrinkItems();
 
     void addTimeToCurrentTime(int min);
+
+    void clearSession();
 }

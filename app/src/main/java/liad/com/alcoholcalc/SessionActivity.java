@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -72,6 +73,17 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         initMapImageIconsPaths();
         updateTimerView();
         initFastForward();
+        initCleatSessionBtn();
+    }
+
+    private void initCleatSessionBtn() {
+        Button clearSessionButton = (Button)findViewById(R.id.clearSessionBtn);
+        clearSessionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uiController.cleatSession();
+            }
+        });
     }
 
     private void initFastForward() {
@@ -141,14 +153,44 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
                 linearLayout.addView(imageView);
             }
         }
+        handleImageViewToRemove(linearLayout, sessionDrinks);
+    }
+
+    private void handleImageViewToRemove(LinearLayout linearLayout, List<UIDrinkItem> sessionDrinks) {
+        int childCount = linearLayout.getChildCount();
+
+        for (int i = childCount ; i >= 0; i--) {
+            View view = linearLayout.getChildAt(i);
+            if (view != null){
+                boolean imageInDrinksList = isImageInDrinksList(view, sessionDrinks);
+                if (imageInDrinksList == false) {
+                    linearLayout.removeView(view);
+                }
+            }
+        }
+    }
+
+    private boolean isImageInDrinksList(View view, List<UIDrinkItem> sessionDrinks) {
+
+        String tag = (String)view.getTag();
+        String[] split = tag.split("_");
+        for (UIDrinkItem uiDrinkItem : sessionDrinks) {
+            if (split[1].equals(uiDrinkItem.getDrinkingDateTime())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private ImageView createDrinkImage(UIDrinkItem drinkItem) {
         if (isNewDrink(drinkItem)) {
             String drinkType = drinkItem.getDrinkType();
             String formattedDrinkType = drinkType.replace("_", "").toLowerCase();
+            String drinkingDateTime = drinkItem.getDrinkingDateTime();
+            String tag = formattedDrinkType.concat("_" + drinkingDateTime);
             ImageView drinkView = new ImageView(this);
-            drinkView.setTag(formattedDrinkType);
+
+            drinkView.setTag(tag);
             drinkView.setImageResource(imageMap.get(formattedDrinkType));
             currentActiveDrinks.add(drinkItem);
             return drinkView;

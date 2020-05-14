@@ -42,4 +42,9 @@ public class ServerControllerImpl implements ServerController {
     public void addTimeToCurrentTime(int clickCount) {
         sessionRunner.addTimeToCurrentTime(clickCount);
     }
+
+    @Override
+    public void clearSession() {
+        sessionRunner.clearSession();
+    }
 }

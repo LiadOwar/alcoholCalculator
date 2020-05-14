@@ -265,4 +265,10 @@ public class SessionRunnerImpl implements SessionRunner {
     public void addTimeToCurrentTime(int clickCount) {
         drinkingSession.setFastForwardClickCounter(clickCount);
     }
+
+    @Override
+    public void clearSession() {
+        drinkingSession.getSessionDrinkingItems().clear();
+
+    }
 }

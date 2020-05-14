@@ -9,6 +9,7 @@ import liad.com.alcoholcalc.server.beverage.Beverage;
 import liad.com.alcoholcalc.server.beverage.BeverageType;
 import liad.com.alcoholcalc.server.session.SessionDrinkItem;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -44,5 +45,25 @@ public class ServerControllerTest extends BaseTest {
         Double futureAlcoholScore = serverController.getFutureAlcoholScore();
 
         assertThat(futureAlcoholScore, is(5.13));
+    }
+
+    @Test
+    public void clearSessionServerTest_Test(){
+        Beverage beverage = beverageFactory.getBeverage(BeverageType.STRONG_BEER);
+        SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverage, 500D ,MOCK_DATE_TIME);
+        SessionDrinkItem sessionDrinkItem2 = new SessionDrinkItem(beverage, 500D ,MOCK_DATE_TIME);
+
+
+        serverController.addDrinkToSession(sessionDrinkItem1);
+        serverController.addDrinkToSession(sessionDrinkItem2);
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusHours(1));
+        Double alcoholScore = serverController.getAlcoholScore();
+        assertThat(alcoholScore, not(0D));
+        serverController.clearSession();
+        alcoholScore = serverController.getAlcoholScore();
+        assertThat(alcoholScore, is(0D));
+        assertThat(drinkingSession.getSessionDrinkingItems().size(), is(0));
+
+
     }
 }

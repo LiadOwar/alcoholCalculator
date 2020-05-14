@@ -67,4 +67,9 @@ public class UIControllerImpl implements UIController  {
     public void addTimeToCurrentTime(int clickCount) {
         gateway.addTimeToCurrentTime(clickCount);
     }
+
+    @Override
+    public void cleatSession() {
+        gateway.cleatSession();
+    }
 }

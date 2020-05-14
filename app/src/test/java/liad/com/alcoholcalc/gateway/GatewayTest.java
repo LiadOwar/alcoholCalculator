@@ -9,6 +9,7 @@ import java.util.List;
 import liad.com.alcoholcalc.BaseTest;
 import liad.com.alcoholcalc.server.session.SessionDrinkItem;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -50,6 +51,29 @@ public class GatewayTest extends BaseTest {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
+    @Test
+    public void clearSessionGateway_Test() {
+        JSONObject jsonObject1 = new JSONObject();
+        JSONObject jsonObject2 = new JSONObject();
+        try {
+            jsonObject1.put("type", "STRONGBEER");
+            jsonObject1.put("amount", "500");
+            jsonObject2.put("type", "STRONGBEER");
+            jsonObject2.put("amount", "500");
+            gateway.AddDrinkFromUIToServer(jsonObject1);
+            gateway.AddDrinkFromUIToServer(jsonObject2);
+            List<SessionDrinkItem> sessionDrinkingItems = drinkingSession.getSessionDrinkingItems();
+            Double score = gateway.getAlcoholScore();
+            assertThat(score, not(0D));
+            gateway.cleatSession();
+            score = gateway.getAlcoholScore();
+            assertThat(sessionDrinkingItems.size(), is(0));
+            assertThat(score, is(0D));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,6 +1,6 @@
 package liad.com.alcoholcalc;
 
-import org.joda.time.LocalDateTime;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -89,6 +89,7 @@ public class DrinkingSessionTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void calculateConsumedAmountOfBeerAfter10Min_Test() {
         sessionRunner.startSession();
         SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_BEER), 500D, MOCK_DATE_TIME);
@@ -149,6 +150,7 @@ public class DrinkingSessionTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void stopConsumingIfDrinkIsFullyConsumed_Test() {
         sessionRunner.startSession();
         SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_BEER), 500D, MOCK_DATE_TIME);
@@ -212,20 +214,9 @@ public class DrinkingSessionTest extends BaseTest {
         assertThat(item2.getBeverage(), is(beverageFactory.getBeverage(BeverageType.STRONG_BEER)));
     }
 
-    private DrinkingSession createDefaultDrinkingSession(){
 
-        SessionDrinkItem sessionDrinkItem = createSessionDrinkItem(BeverageType.STRONG_BEER, 500D, MOCK_DATE_TIME);
-        drinkingSession.addSessionDrinkItem(sessionDrinkItem);
 
-        return drinkingSession;
-    }
 
-    private SessionDrinkItem createSessionDrinkItem(BeverageType beverageType, Double amount, LocalDateTime dateTime) {
-        Beverage beverage = beverageFactory.getBeverage(beverageType);
-        SessionDrinkItem sessionDrinkItem = new SessionDrinkItem(beverage, amount, dateTime);
-
-        return sessionDrinkItem;
-    }
 
 
 }

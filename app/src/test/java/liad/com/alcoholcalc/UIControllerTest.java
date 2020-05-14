@@ -118,4 +118,25 @@ public class UIControllerTest extends BaseTest{
 
         assertThat(score, is(5.13d));
     }
+
+    @Test
+    public void clearSessionUI_test() {
+
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME);
+        uiController.addDrinkToSession("strongchaser_img_30");
+        uiController.addDrinkToSession("strongchaser_img_30");
+        SessionDrinkItem sessionDrinkItem1 = drinkingSession.getSessionDrinkingItems().get(0);
+        SessionDrinkItem sessionDrinkItem2 = drinkingSession.getSessionDrinkingItems().get(1);
+        sessionDrinkItem1.setStartDateTime(MOCK_DATE_TIME);
+        sessionDrinkItem2.setStartDateTime(MOCK_DATE_TIME);
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(1));
+        List<UIDrinkItem> drinks = uiController.getSessionDrinks();
+        assertThat(drinks.size(), is(2));
+        uiController.cleatSession();
+        List<UIDrinkItem> drinksAfterClear = uiController.getSessionDrinks();
+        assertThat(drinksAfterClear.size(), is(0));
+    }
+
+
+
 }
