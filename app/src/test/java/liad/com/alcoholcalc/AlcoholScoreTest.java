@@ -1,7 +1,6 @@
 package liad.com.alcoholcalc;
 
 import org.joda.time.LocalDateTime;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import liad.com.alcoholcalc.server.beverage.BeverageType;
@@ -22,7 +21,6 @@ public class AlcoholScoreTest extends BaseTest {
     private SessionUser defaultManUser = new SessionUser(70D, GENDER.MALE);
 
     @Test
-    @Ignore
     public void calculateScore0_Test() {
         drinkingSession.setSessionUser(defaultManUser);
         sessionRunner.startSession();
@@ -113,7 +111,6 @@ public class AlcoholScoreTest extends BaseTest {
     }
 
     @Test
-    @Ignore
     public void calculateScore2StrongBeers30and300min_Test() {
         drinkingSession.setSessionUser(defaultManUser);
         sessionRunner.startSession();

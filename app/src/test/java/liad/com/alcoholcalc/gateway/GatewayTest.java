@@ -65,10 +65,9 @@ public class GatewayTest extends BaseTest {
             gateway.AddDrinkFromUIToServer(jsonObject1);
             gateway.AddDrinkFromUIToServer(jsonObject2);
             List<SessionDrinkItem> sessionDrinkingItems = drinkingSession.getSessionDrinkingItems();
-            Double score = gateway.getAlcoholScore();
-            assertThat(score, not(0D));
+            assertThat(sessionDrinkingItems.size(), not(0));
             gateway.cleatSession();
-            score = gateway.getAlcoholScore();
+            Double score = gateway.getAlcoholScore();
             assertThat(sessionDrinkingItems.size(), is(0));
             assertThat(score, is(0D));
 

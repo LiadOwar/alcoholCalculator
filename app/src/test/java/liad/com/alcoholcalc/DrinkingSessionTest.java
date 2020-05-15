@@ -1,6 +1,5 @@
 package liad.com.alcoholcalc;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -89,7 +88,6 @@ public class DrinkingSessionTest extends BaseTest {
     }
 
     @Test
-    @Ignore
     public void calculateConsumedAmountOfBeerAfter10Min_Test() {
         sessionRunner.startSession();
         SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_BEER), 500D, MOCK_DATE_TIME);
@@ -150,7 +148,6 @@ public class DrinkingSessionTest extends BaseTest {
     }
 
     @Test
-    @Ignore
     public void stopConsumingIfDrinkIsFullyConsumed_Test() {
         sessionRunner.startSession();
         SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_BEER), 500D, MOCK_DATE_TIME);
@@ -212,6 +209,35 @@ public class DrinkingSessionTest extends BaseTest {
         SessionDrinkItem item2 = (SessionDrinkItem)sessionDrinkItems.get(1);
         assertThat(item1.getBeverage(), is(beverageFactory.getBeverage(BeverageType.STRONG_BEER)));
         assertThat(item2.getBeverage(), is(beverageFactory.getBeverage(BeverageType.STRONG_BEER)));
+    }
+
+    @Test
+    public void calculateAlcoholScoreOf2StrongChaserAfter40Min_Test() {
+        sessionRunner.startSession();
+        SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_CHASER), 30D, MOCK_DATE_TIME);
+        SessionDrinkItem sessionDrinkItem2 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_CHASER), 30D, MOCK_DATE_TIME);
+        SessionDrinkItem sessionDrinkItem3 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_CHASER), 30D, MOCK_DATE_TIME);
+        sessionRunner.addDrinkItemToSession(sessionDrinkItem1);
+        sessionRunner.addDrinkItemToSession(sessionDrinkItem2);
+
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(40));
+        sessionRunner.calculateSessionStatus();
+
+        assertThat(sessionRunner.getAlcoholScore(), is(0.0298));
+    }
+
+    @Test
+    public void calculateAlcoholScoreOf2StrongChaserAfter40MinAnd80Min_Test() {
+        sessionRunner.startSession();
+        SessionDrinkItem sessionDrinkItem1 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_CHASER), 30D, MOCK_DATE_TIME);
+        SessionDrinkItem sessionDrinkItem2 = new SessionDrinkItem(beverageFactory.getBeverage(BeverageType.STRONG_CHASER), 30D, MOCK_DATE_TIME.plusMinutes(40));
+        sessionRunner.addDrinkItemToSession(sessionDrinkItem1);
+        sessionRunner.addDrinkItemToSession(sessionDrinkItem2);
+
+        drinkingSession.setCurrentDateTime(MOCK_DATE_TIME.plusMinutes(80));
+        sessionRunner.calculateSessionStatus();
+
+        assertThat(sessionRunner.getAlcoholScore(), is(0.0198));
     }
 
 

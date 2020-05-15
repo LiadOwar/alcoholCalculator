@@ -56,20 +56,36 @@ public class SessionRunnerImpl implements SessionRunner {
             SessionDrinkItem nextDrinkItem = getNextDrinkItem(i, sessionDrinkingItems);
 
             LocalDateTime drinkItemStartDateTime = currentDrinkItem.getStartDateTime();
-            LocalDateTime nextTimePoint = drinkingSession.getCurrentDateTime();
+            LocalDateTime currentTime = drinkingSession.getCurrentDateTime();
+            LocalDateTime nextTimePoint = currentTime;
             if (nextDrinkItem != null) {
                 nextTimePoint = nextDrinkItem.getStartDateTime();
             }
             Period deltaTime =  Period.fieldDifference(drinkItemStartDateTime, nextTimePoint);
+            Period deltaTimeFromCurrent =  Period.fieldDifference(drinkItemStartDateTime, currentTime);
             int deltaTimeMinutes = deltaTime.toStandardMinutes().getMinutes();
+            int deltaTimeMinutesFromCurrent = deltaTimeFromCurrent.toStandardMinutes().getMinutes();
             Double hypotheticalGrossBAC = getHypotheticalGrossBAC(userWeightGr,
-                                    EtOhProcessCoefficient, currentDrinkItem);
+                                    EtOhProcessCoefficient, currentDrinkItem,currentDrinkItem.getAmount());
             Double potentialEtOHConsumed = deltaTimeMinutes * Consts.ETOH_PROCESS_RATE;
-            accumulatedHypotheticalBAC += (hypotheticalGrossBAC - potentialEtOHConsumed) ;
+            Double amount = currentDrinkItem.getAmount();
+            Double assumedConsumptionRate = currentDrinkItem.getBeverage().getAssumedConsumptionRate();
+            Double consumedAmount = assumedConsumptionRate * deltaTimeMinutesFromCurrent;
+            Double unConsumedDrinkAmount = amount - consumedAmount;
+            if (unConsumedDrinkAmount < 0D) {
+                unConsumedDrinkAmount = 0D;
+            }
+            Double unConsumedBAC = getHypotheticalGrossBAC(userWeightGr,
+                    EtOhProcessCoefficient, currentDrinkItem, unConsumedDrinkAmount);
 
+            accumulatedHypotheticalBAC += (hypotheticalGrossBAC - unConsumedBAC - potentialEtOHConsumed);
             if (accumulatedHypotheticalBAC < 0D) {
                 accumulatedHypotheticalBAC = 0D;
             }
+
+
+
+
 
 //
 //
@@ -169,7 +185,7 @@ public class SessionRunnerImpl implements SessionRunner {
             Period deltaTime =  Period.fieldDifference(drinkItemStartDateTime, nextTimePoint);
             int deltaTimeMinutes = deltaTime.toStandardMinutes().getMinutes();
             Double hypotheticalGrossBAC = getHypotheticalGrossBAC(userWeightGr,
-                    EtOhProcessCoefficient, currentDrinkItem);
+                    EtOhProcessCoefficient, currentDrinkItem, currentDrinkItem.getAmount());
             Double potentialEtOHConsumed = deltaTimeMinutes * Consts.ETOH_PROCESS_RATE;
             accumulatedHypotheticalBAC += (hypotheticalGrossBAC - potentialEtOHConsumed) ;
 
@@ -217,9 +233,8 @@ public class SessionRunnerImpl implements SessionRunner {
         sessionStatus.setFutureAlcoholScore(formattedBAC);
     }
 
-    private Double getHypotheticalGrossBAC(Double userWeightGr, Double etOhProcessCoefficient, SessionDrinkItem drinkItem) {
+    private Double getHypotheticalGrossBAC(Double userWeightGr, Double etOhProcessCoefficient, SessionDrinkItem drinkItem, Double amount) {
         Beverage beverage = drinkItem.getBeverage();
-        Double amount = drinkItem.getAmount();
         Double EtOhConcentration = beverage.getAlcoholConcentration() / 100;
 
         return (amount * EtOhConcentration * Consts.ETOH_DENSITY * 100) / (userWeightGr * etOhProcessCoefficient);
@@ -269,6 +284,8 @@ public class SessionRunnerImpl implements SessionRunner {
     @Override
     public void clearSession() {
         drinkingSession.getSessionDrinkingItems().clear();
+        drinkingSession.setCurrentDateTime(LocalDateTime.now());
+        drinkingSession.setFastForwardClickCounter(0);
 
     }
 }

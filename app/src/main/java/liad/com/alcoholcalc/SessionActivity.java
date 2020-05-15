@@ -73,15 +73,16 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         initMapImageIconsPaths();
         updateTimerView();
         initFastForward();
-        initCleatSessionBtn();
+        initClearSessionBtn();
     }
 
-    private void initCleatSessionBtn() {
+    private void initClearSessionBtn() {
         Button clearSessionButton = (Button)findViewById(R.id.clearSessionBtn);
         clearSessionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uiController.cleatSession();
+                fastForwardClickCounter = 0;
             }
         });
     }
