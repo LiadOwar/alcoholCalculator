@@ -1,8 +1,11 @@
 package liad.com.alcoholcalc;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -78,13 +81,35 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
 
     private void initClearSessionBtn() {
         Button clearSessionButton = (Button)findViewById(R.id.clearSessionBtn);
+        final Dialog dialog = initAlertBeforeClearSession();
         clearSessionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.show();
+
+            }
+        });
+    }
+
+    private Dialog initAlertBeforeClearSession() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("ARE YOU SURE?")
+                .setTitle("Clear Session");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
                 uiController.cleatSession();
                 fastForwardClickCounter = 0;
             }
         });
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        return dialog;
     }
 
     private void initFastForward() {
