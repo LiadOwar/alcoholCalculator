@@ -179,6 +179,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
                 linearLayout.addView(imageView);
                 TextView detailsView = new TextView(this);
                 String drinkDetailsText = createDrinkDetailsText(drinkItem);
+                detailsView.setTag(imageView.getTag());
                 detailsView.setText(drinkDetailsText);
                 detailsView.setTextSize(7F);
                 detailsView.setPadding(10,0,0,0);
@@ -186,6 +187,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
             }
         }
         handleImageViewToRemove(linearLayout, sessionDrinks);
+        handleImageViewToRemove(linearLayoutDesc, sessionDrinks);
     }
 
     private String createDrinkDetailsText(UIDrinkItem drinkItem) {
@@ -234,6 +236,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         }
         return false;
     }
+
 
     private ImageView createDrinkImage(UIDrinkItem drinkItem) {
         if (isNewDrink(drinkItem)) {
