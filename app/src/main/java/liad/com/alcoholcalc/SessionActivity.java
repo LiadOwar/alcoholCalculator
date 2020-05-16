@@ -31,6 +31,7 @@ import java.util.TimerTask;
 import liad.com.alcoholcalc.server.session.DrinkingSession;
 import liad.com.alcoholcalc.ui.BeverageIconLongClickListener;
 import liad.com.alcoholcalc.ui.BeverageIconOnTouchListener;
+import liad.com.alcoholcalc.ui.GaugeTickMapper;
 import liad.com.alcoholcalc.ui.controller.UIController;
 import liad.com.alcoholcalc.ui.controller.UIControllerImpl;
 import liad.com.alcoholcalc.ui.drinkitem.UIDrinkItem;
@@ -282,19 +283,23 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
 
 
     private SpeedView configureScoreGauge() {
-        SpeedView speedometer = (SpeedView)findViewById(R.id.speedView);
+        final SpeedView speedometer = (SpeedView)findViewById(R.id.speedView);
         speedometer.setSpeedAt(0f);
         speedometer.setMinMaxSpeed(0.0f, 50f);
         speedometer.setUnit("Score");
         speedometer.setWithTremble(false);
         speedometer.clearSections();
-        Section greenSection = new Section(0f, 0.1f, Color.GREEN, 20);
-        Section yellowSection = new Section(0.1f, 0.2f, Color.YELLOW, 20);
-        Section orangeSection = new Section(0.2f, 0.4f, Color.rgb(247, 138, 5), 20);
-        Section redSection = new Section(0.4f, 0.8f, Color.RED,20);
-        Section blackSection = new Section(0.8f, 1f, Color.BLACK,20);
+        Section greenSection = new Section(0f, 0.1f, Color.GREEN, 80);
+        Section yellowSection = new Section(0.1f, 0.2f, Color.YELLOW, 80);
+        Section orangeSection = new Section(0.2f, 0.4f, Color.rgb(247, 138, 5), 80);
+        Section redSection = new Section(0.4f, 0.8f, Color.RED,80);
+        Section blackSection = new Section(0.8f, 1f, Color.BLACK,80);
         speedometer.addSections(greenSection, yellowSection, orangeSection, redSection, blackSection);
-        speedometer.setTickNumber(7);
+        speedometer.setTickNumber(20);
+//        speedometer.setTickPadding(0);
+        speedometer.setOnPrintTickLabel(new GaugeTickMapper());
+
+
 
         return speedometer;
     }

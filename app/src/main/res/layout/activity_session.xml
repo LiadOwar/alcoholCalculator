@@ -94,43 +94,41 @@
         app:sv_unitUnderSpeedText="true"
         app:sv_withIndicatorLight="false" />
 
-    <TextView
-        android:id="@+id/timerView"
-        android:layout_width="97dp"
-        android:layout_height="21dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/speedView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.277"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.127" />
-
     <ImageView
         android:id="@+id/fastForwardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
+        android:layout_marginEnd="300dp"
+        android:layout_marginRight="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.534"
-        app:layout_constraintStart_toEndOf="@+id/timerView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.008"
+        app:layout_constraintVertical_bias="0.022"
         app:srcCompat="@android:drawable/ic_media_ff" />
+
+    <TextView
+        android:id="@+id/timerView"
+        android:layout_width="97dp"
+        android:layout_height="21dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginRight="176dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/speedView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.189" />
 
     <Button
         android:id="@+id/clearSessionBtn"
         style="@android:style/Widget.Material.Light.Button.Small"
         android:layout_width="31dp"
         android:layout_height="29dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="300dp"
+        android:layout_marginRight="300dp"
         android:background="@android:drawable/ic_menu_delete"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.805"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fastForwardView" />
 
 </android.support.constraint.ConstraintLayout>
