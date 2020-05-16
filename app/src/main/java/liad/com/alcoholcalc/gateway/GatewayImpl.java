@@ -79,10 +79,12 @@ public class GatewayImpl implements Gateway {
                 JSONObject jsonDrinkItem = new JSONObject();
                 Beverage beverage = drinkItem.getBeverage();
                 Double amount = drinkItem.getAmount();
+                Double etOHConc = beverage.getAlcoholConcentration();
                 LocalDateTime drinkTime = drinkItem.getStartDateTime();
 
                 jsonDrinkItem.put("type", beverage.getType().toString());
                 jsonDrinkItem.put("amount",amount);
+                jsonDrinkItem.put("etOHConc", etOHConc);
                 jsonDrinkItem.put("drinkTime",drinkTime);
 
                 ret.add(jsonDrinkItem);

@@ -8,6 +8,8 @@ public class UIDrinkItem {
 
     private String amount;
 
+    private String etOHConc;
+
     public String getAmount() {
         return amount;
     }
@@ -16,8 +18,13 @@ public class UIDrinkItem {
         this.amount = amount;
     }
 
-    public UIDrinkItem(String drinkType, String amount, String drinkingDateTime) {
+    public String getEtOHConc() {
+        return etOHConc;
+    }
+
+    public UIDrinkItem(String drinkType, String etOHConc, String amount, String drinkingDateTime) {
         this.drinkType = drinkType;
+        this.etOHConc = etOHConc;
         this.amount = amount;
         this.drinkingDateTime = drinkingDateTime;
     }

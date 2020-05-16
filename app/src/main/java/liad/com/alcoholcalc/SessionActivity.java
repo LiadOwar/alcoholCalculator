@@ -104,7 +104,6 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         });
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog
             }
         });
 
@@ -173,13 +172,41 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
     private void updateDrinksList() {
         List<UIDrinkItem> sessionDrinks = uiController.getSessionDrinks();
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.linear_layout);
+        LinearLayout linearLayoutDesc = (LinearLayout)findViewById(R.id.linear_layout_desc);
         for(UIDrinkItem drinkItem : sessionDrinks) {
             ImageView imageView = createDrinkImage(drinkItem);
             if (imageView != null) {
                 linearLayout.addView(imageView);
+                TextView detailsView = new TextView(this);
+                String drinkDetailsText = createDrinkDetailsText(drinkItem);
+                detailsView.setText(drinkDetailsText);
+                detailsView.setTextSize(7F);
+                detailsView.setPadding(10,0,0,0);
+                linearLayoutDesc.addView(detailsView);
             }
         }
         handleImageViewToRemove(linearLayout, sessionDrinks);
+    }
+
+    private String createDrinkDetailsText(UIDrinkItem drinkItem) {
+        StringBuilder sb = new StringBuilder();
+        String drinkingDateTime = drinkItem.getDrinkingDateTime();
+        String formatedDrinkDateTime =  formatDrinkDateTime(drinkingDateTime);
+        sb.append(formatedDrinkDateTime);
+        sb.append("\n");
+        sb.append(drinkItem.getAmount() + " ml");
+        sb.append("\n");
+        sb.append(drinkItem.getEtOHConc() + " %");
+        return sb.toString();
+    }
+
+    private String formatDrinkDateTime(String drinkingDateTime) {
+       String ret = "";
+       String[] split = drinkingDateTime.split("\\.");
+       ret = split[0].replace("T", "\n");
+
+
+        return ret;
     }
 
     private void handleImageViewToRemove(LinearLayout linearLayout, List<UIDrinkItem> sessionDrinks) {

@@ -7,6 +7,28 @@
     android:clickable="true"
     tools:context="liad.com.alcoholcalc.SessionActivity">
 
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="336dp"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/speedView"
+        app:layout_constraintVertical_bias="0.0"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_desc"
+        android:layout_width="336dp"
+        android:layout_height="43dp"
+        android:gravity="top"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout"></LinearLayout>
+
     <ImageView
         android:id="@+id/StrongBeer_Img"
         android:layout_width="wrap_content"
@@ -39,18 +61,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NormalBeer_Img"
         app:srcCompat="@drawable/strongchaser" />
-
-    <LinearLayout
-        android:id="@+id/linear_layout"
-        android:layout_width="300dp"
-        android:layout_height="63dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.604"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/speedView"
-        app:layout_constraintVertical_bias="0.067"></LinearLayout>
 
     <com.github.anastr.speedviewlib.SpeedView
         android:id="@+id/speedView"
@@ -122,4 +132,5 @@
         app:layout_constraintHorizontal_bias="0.805"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fastForwardView" />
+
 </android.support.constraint.ConstraintLayout>

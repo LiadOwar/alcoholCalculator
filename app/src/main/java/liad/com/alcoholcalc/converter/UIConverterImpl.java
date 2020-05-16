@@ -32,13 +32,15 @@ public class UIConverterImpl implements UIConverter {
         UIDrinkItem ret = null;
         String type;
         String amount;
+        String etOHConc;
         String drinkTime;
 
         try {
             type = (String)jsonObject.get("type");
             amount = jsonObject.get("amount").toString();
+            etOHConc = jsonObject.get("etOHConc").toString();
             drinkTime = (jsonObject.get("drinkTime")).toString();
-            ret = new UIDrinkItem(type, amount, drinkTime);
+            ret = new UIDrinkItem(type, etOHConc, amount , drinkTime);
         } catch (JSONException e) {
             e.printStackTrace();
         }

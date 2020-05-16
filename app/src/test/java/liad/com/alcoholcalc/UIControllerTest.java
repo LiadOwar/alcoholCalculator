@@ -80,6 +80,7 @@ public class UIControllerTest extends BaseTest{
 
         try {
             jsonObject.put("type", new StrongBeer().getType().toString());
+            jsonObject.put("etOHConc", new StrongBeer().getAlcoholConcentration());
             jsonObject.put("amount",100d);
             jsonObject.put("drinkTime",MOCK_DATE_TIME);
             UIDrinkItem uiDrinkItem = uiConverter.convertJSONToUIDrinkItem(jsonObject);
