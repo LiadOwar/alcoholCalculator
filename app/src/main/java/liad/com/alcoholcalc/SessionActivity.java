@@ -31,6 +31,7 @@ import java.util.TimerTask;
 import liad.com.alcoholcalc.server.session.DrinkingSession;
 import liad.com.alcoholcalc.ui.BeverageIconLongClickListener;
 import liad.com.alcoholcalc.ui.BeverageIconOnTouchListener;
+import liad.com.alcoholcalc.ui.DrinkListItemOnClickListener;
 import liad.com.alcoholcalc.ui.GaugeTickMapper;
 import liad.com.alcoholcalc.ui.controller.UIController;
 import liad.com.alcoholcalc.ui.controller.UIControllerImpl;
@@ -132,7 +133,6 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
     }
 
     private void updateTimerView() {
-//        LocalDateTime localDateTime = LocalDateTime.now();
         LocalDateTime localDateTime = DrinkingSession.getSession().getCurrentDateTime();
         int hourOfDay = localDateTime.getHourOfDay();
         int minuteOfHour = localDateTime.getMinuteOfHour();
@@ -177,13 +177,14 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         for(UIDrinkItem drinkItem : sessionDrinks) {
             ImageView imageView = createDrinkImage(drinkItem);
             if (imageView != null) {
+                imageView.setPadding(20, 0 ,0 , 0);
                 linearLayout.addView(imageView);
                 TextView detailsView = new TextView(this);
                 String drinkDetailsText = createDrinkDetailsText(drinkItem);
                 detailsView.setTag(imageView.getTag());
                 detailsView.setText(drinkDetailsText);
-                detailsView.setTextSize(7F);
-                detailsView.setPadding(10,0,0,0);
+                detailsView.setTextSize(10F);
+                detailsView.setPadding(28,0,0,0);
                 linearLayoutDesc.addView(detailsView);
             }
         }
@@ -194,19 +195,16 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
     private String createDrinkDetailsText(UIDrinkItem drinkItem) {
         StringBuilder sb = new StringBuilder();
         String drinkingDateTime = drinkItem.getDrinkingDateTime();
-        String formatedDrinkDateTime =  formatDrinkDateTime(drinkingDateTime);
-        sb.append(formatedDrinkDateTime);
-        sb.append("\n");
-        sb.append(drinkItem.getAmount() + " ml");
-        sb.append("\n");
-        sb.append(drinkItem.getEtOHConc() + " %");
+        String formattedDrinkDateTime =  formatDrinkDateTime(drinkingDateTime);
+        sb.append(formattedDrinkDateTime);
+
         return sb.toString();
     }
 
     private String formatDrinkDateTime(String drinkingDateTime) {
        String ret = "";
        String[] split = drinkingDateTime.split("\\.");
-       ret = split[0].replace("T", "\n");
+       ret = split[0].split("T")[1];
 
 
         return ret;
@@ -246,7 +244,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
             String drinkingDateTime = drinkItem.getDrinkingDateTime();
             String tag = formattedDrinkType.concat("_" + drinkingDateTime);
             ImageView drinkView = new ImageView(this);
-
+            drinkView.setOnClickListener(new DrinkListItemOnClickListener(drinkItem, uiController));
             drinkView.setTag(tag);
             drinkView.setImageResource(imageMap.get(formattedDrinkType));
             currentActiveDrinks.add(drinkItem);
@@ -296,7 +294,6 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         Section blackSection = new Section(0.8f, 1f, Color.BLACK,80);
         speedometer.addSections(greenSection, yellowSection, orangeSection, redSection, blackSection);
         speedometer.setTickNumber(20);
-//        speedometer.setTickPadding(0);
         speedometer.setOnPrintTickLabel(new GaugeTickMapper());
 
 
@@ -316,7 +313,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
             section.setColor(android.R.color.transparent);
         }
         speedometer.setIndicator(Indicator.Indicators.NeedleIndicator);
-        speedometer.getIndicator().setColor(Color.RED);
+        speedometer.getIndicator().setColor(Color.rgb(48, 8, 36));
 
         return speedometer;
     }

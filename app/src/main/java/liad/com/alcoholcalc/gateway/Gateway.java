@@ -1,5 +1,6 @@
 package liad.com.alcoholcalc.gateway;
 
+import org.joda.time.LocalDateTime;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface Gateway {
     void addTimeToCurrentTime(int min);
 
     void cleatSession();
+
+    void removeDrink(LocalDateTime drinkingDateTime);
 }

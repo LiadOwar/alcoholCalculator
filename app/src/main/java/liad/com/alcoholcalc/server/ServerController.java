@@ -1,5 +1,7 @@
 package liad.com.alcoholcalc.server;
 
+import org.joda.time.LocalDateTime;
+
 import java.util.List;
 
 import liad.com.alcoholcalc.server.session.SessionDrinkItem;
@@ -21,4 +23,6 @@ public interface ServerController {
     void addTimeToCurrentTime(int min);
 
     void clearSession();
+
+    void removeDrink(LocalDateTime drinkingDateTime);
 }

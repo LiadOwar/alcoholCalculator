@@ -21,6 +21,7 @@ public interface UIController extends Serializable {
 
     void addTimeToCurrentTime(int min);
 
-
     void cleatSession();
+
+    void removeDrink(UIDrinkItem drinkItem);
 }

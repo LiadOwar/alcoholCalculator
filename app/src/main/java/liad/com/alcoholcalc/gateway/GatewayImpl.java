@@ -106,6 +106,11 @@ public class GatewayImpl implements Gateway {
         serverController.clearSession();
     }
 
+    @Override
+    public void removeDrink(LocalDateTime drinkingDateTime) {
+        serverController.removeDrink(drinkingDateTime);
+    }
+
     private Beverage convertStringToBeverage(String type) {
         return beverageConverterMap.get(type.toUpperCase());
     }

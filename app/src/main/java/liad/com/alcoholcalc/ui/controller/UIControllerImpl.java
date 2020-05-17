@@ -2,6 +2,7 @@ package liad.com.alcoholcalc.ui.controller;
 
 import com.google.common.collect.Lists;
 
+import org.joda.time.LocalDateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -71,5 +72,11 @@ public class UIControllerImpl implements UIController  {
     @Override
     public void cleatSession() {
         gateway.cleatSession();
+    }
+
+    @Override
+    public void removeDrink(UIDrinkItem drinkItem) {
+        LocalDateTime localDateTime = new LocalDateTime(drinkItem.getDrinkingDateTime());
+        gateway.removeDrink(localDateTime);
     }
 }

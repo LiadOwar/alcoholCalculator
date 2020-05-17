@@ -4,7 +4,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class BeverageIconOnTouchListener implements View.OnTouchListener {
-    private float bigScale = 2;
+    private float bigScale = 1.5f;
     private float smallScale = 1;
     private static final String TAG = "SessionActivity";
 

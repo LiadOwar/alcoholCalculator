@@ -1,5 +1,7 @@
 package liad.com.alcoholcalc.server;
 
+import org.joda.time.LocalDateTime;
+
 import java.util.List;
 
 import liad.com.alcoholcalc.server.session.SessionDrinkItem;
@@ -46,5 +48,17 @@ public class ServerControllerImpl implements ServerController {
     @Override
     public void clearSession() {
         sessionRunner.clearSession();
+    }
+
+    @Override
+    public void removeDrink(LocalDateTime drinkingDateTime) {
+        List<SessionDrinkItem> sessionDrinkItems = sessionRunner.getSessionDrinkItems();
+        for (int i = 0 ; i < sessionDrinkItems.size() ; ++i) {
+            SessionDrinkItem sessionDrinkItem = sessionDrinkItems.get(i);
+            if (sessionDrinkItem.getStartDateTime().isEqual(drinkingDateTime)) {
+                sessionRunner.removeDrinkItemFromSession(i);
+                break;
+            }
+        }
     }
 }

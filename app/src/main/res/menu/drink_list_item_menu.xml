@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/drink_type_description"
+        android:title="description" android:enabled="false" >
+    </item>
+    <item android:id="@+id/drink_amount_conc_description"
+        android:title="description" android:enabled="false">
+    </item>
+    <item android:id="@+id/drink_datetime_description"
+        android:title="description" android:enabled="false">
+    </item>
+    <item android:id="@+id/remove_drink"
+        android:title="Remove Drink">
+    </item>
+</menu>
