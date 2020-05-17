@@ -52,6 +52,7 @@ public class ServerControllerImpl implements ServerController {
 
     @Override
     public void removeDrink(LocalDateTime drinkingDateTime) {
+        //TODO make unit tests
         List<SessionDrinkItem> sessionDrinkItems = sessionRunner.getSessionDrinkItems();
         for (int i = 0 ; i < sessionDrinkItems.size() ; ++i) {
             SessionDrinkItem sessionDrinkItem = sessionDrinkItems.get(i);

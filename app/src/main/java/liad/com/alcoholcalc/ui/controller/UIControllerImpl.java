@@ -76,6 +76,7 @@ public class UIControllerImpl implements UIController  {
 
     @Override
     public void removeDrink(UIDrinkItem drinkItem) {
+        //TODO make unit tests
         LocalDateTime localDateTime = new LocalDateTime(drinkItem.getDrinkingDateTime());
         gateway.removeDrink(localDateTime);
     }

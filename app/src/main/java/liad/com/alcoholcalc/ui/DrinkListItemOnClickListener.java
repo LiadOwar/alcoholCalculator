@@ -1,6 +1,6 @@
 package liad.com.alcoholcalc.ui;
 
-import android.util.Log;
+import android.os.Vibrator;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -15,10 +15,13 @@ public class DrinkListItemOnClickListener implements View.OnClickListener, Popup
 
     private UIController uiController;
 
+    private Vibrator vibe;
 
-    public DrinkListItemOnClickListener(UIDrinkItem drinkItem, UIController uiController) {
+
+    public DrinkListItemOnClickListener(UIDrinkItem drinkItem, UIController uiController, Vibrator vibe) {
         this.drinkItem = drinkItem;
         this.uiController = uiController;
+        this.vibe = vibe;
     }
 
     @Override
@@ -48,10 +51,12 @@ public class DrinkListItemOnClickListener implements View.OnClickListener, Popup
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.remove_drink : uiController.removeDrink(drinkItem);
-            Log.d("onMenuItemClick" , "removing drink");
+                break;
+            default: return false;
         }
         return false;
     }

@@ -1,10 +1,12 @@
 package liad.com.alcoholcalc;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -32,6 +34,7 @@ import liad.com.alcoholcalc.server.session.DrinkingSession;
 import liad.com.alcoholcalc.ui.BeverageIconLongClickListener;
 import liad.com.alcoholcalc.ui.BeverageIconOnTouchListener;
 import liad.com.alcoholcalc.ui.DrinkListItemOnClickListener;
+import liad.com.alcoholcalc.ui.VibrateOnOnTouchListener;
 import liad.com.alcoholcalc.ui.GaugeTickMapper;
 import liad.com.alcoholcalc.ui.controller.UIController;
 import liad.com.alcoholcalc.ui.controller.UIControllerImpl;
@@ -61,6 +64,10 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
 
     private Integer fastForwardClickCounter;
 
+    private Vibrator vibe;
+
+    VibrateOnOnTouchListener vibrateOnOnTouchListener;
+
     public SessionActivity() {
     }
 
@@ -74,6 +81,8 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         this.gauge = configureScoreGauge();
         this.futureGauge = configureFutureGauge();
         this.timerView = (TextView)findViewById(R.id.timerView);
+        this.vibe = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+        vibrateOnOnTouchListener = (new VibrateOnOnTouchListener(vibe));
         currentActiveDrinks = Lists.newArrayList();
         initMapImageIconsPaths();
         updateTimerView();
@@ -84,6 +93,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
     private void initClearSessionBtn() {
         Button clearSessionButton = (Button)findViewById(R.id.clearSessionBtn);
         final Dialog dialog = initAlertBeforeClearSession();
+        clearSessionButton.setOnTouchListener(vibrateOnOnTouchListener);
         clearSessionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +126,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
     private void initFastForward() {
         ImageView ffView = (ImageView)findViewById(R.id.fastForwardView);
         fastForwardClickCounter = 0;
+        ffView.setOnTouchListener(vibrateOnOnTouchListener);
         ffView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,7 +255,8 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
             String drinkingDateTime = drinkItem.getDrinkingDateTime();
             String tag = formattedDrinkType.concat("_" + drinkingDateTime);
             ImageView drinkView = new ImageView(this);
-            drinkView.setOnClickListener(new DrinkListItemOnClickListener(drinkItem, uiController));
+            drinkView.setOnClickListener(new DrinkListItemOnClickListener(drinkItem, uiController, vibe));
+            drinkView.setOnTouchListener(vibrateOnOnTouchListener);
             drinkView.setTag(tag);
             drinkView.setImageResource(imageMap.get(formattedDrinkType));
             currentActiveDrinks.add(drinkItem);
