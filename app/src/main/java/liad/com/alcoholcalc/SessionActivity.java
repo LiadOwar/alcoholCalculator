@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import org.joda.time.LocalDateTime;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -34,8 +36,8 @@ import liad.com.alcoholcalc.server.session.DrinkingSession;
 import liad.com.alcoholcalc.ui.BeverageIconLongClickListener;
 import liad.com.alcoholcalc.ui.BeverageIconOnTouchListener;
 import liad.com.alcoholcalc.ui.DrinkListItemOnClickListener;
-import liad.com.alcoholcalc.ui.VibrateOnOnTouchListener;
 import liad.com.alcoholcalc.ui.GaugeTickMapper;
+import liad.com.alcoholcalc.ui.VibrateOnOnTouchListener;
 import liad.com.alcoholcalc.ui.controller.UIController;
 import liad.com.alcoholcalc.ui.controller.UIControllerImpl;
 import liad.com.alcoholcalc.ui.drinkitem.UIDrinkItem;
@@ -88,6 +90,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         updateTimerView();
         initFastForward();
         initClearSessionBtn();
+        initResetTimeSessionBtn();
     }
 
     private void initClearSessionBtn() {
@@ -99,6 +102,18 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
             public void onClick(View v) {
                 dialog.show();
 
+            }
+        });
+    }
+
+    private void initResetTimeSessionBtn() {
+        Button resetTimeButton = (Button)findViewById(R.id.resetTimeBtn);
+        resetTimeButton.setOnTouchListener(vibrateOnOnTouchListener);
+        resetTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fastForwardClickCounter = 0;
+                uiController.addTimeToCurrentTime(fastForwardClickCounter);
             }
         });
     }
@@ -181,26 +196,59 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         };
     }
 
+
     private void updateDrinksList() {
         List<UIDrinkItem> sessionDrinks = uiController.getSessionDrinks();
+        sessionDrinks.sort(new Comparator<UIDrinkItem>() {
+            @Override
+            public int compare(UIDrinkItem o1, UIDrinkItem o2) {
+                String o1DrinkingDateTime = o1.getDrinkingDateTime();
+                LocalDateTime o1LocalDateTime = new LocalDateTime(o1DrinkingDateTime);
+                String o2DrinkingDateTime = o2.getDrinkingDateTime();
+                LocalDateTime o2LocalDateTime = new LocalDateTime(o2DrinkingDateTime);
+                return o1LocalDateTime.compareTo(o2LocalDateTime);
+            }
+        });
+
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.linear_layout);
         LinearLayout linearLayoutDesc = (LinearLayout)findViewById(R.id.linear_layout_desc);
-        for(UIDrinkItem drinkItem : sessionDrinks) {
+        LinearLayout linearLayout2 = (LinearLayout)findViewById(R.id.linear_layout2);
+        LinearLayout linearLayoutDesc2 = (LinearLayout)findViewById(R.id.linear_layout_desc2);
+
+        for(int i = 0; i < sessionDrinks.size(); ++i) {
+            UIDrinkItem drinkItem = sessionDrinks.get(i);
             ImageView imageView = createDrinkImage(drinkItem);
-            if (imageView != null) {
-                imageView.setPadding(20, 0 ,0 , 0);
-                linearLayout.addView(imageView);
-                TextView detailsView = new TextView(this);
-                String drinkDetailsText = createDrinkDetailsText(drinkItem);
-                detailsView.setTag(imageView.getTag());
-                detailsView.setText(drinkDetailsText);
-                detailsView.setTextSize(10F);
-                detailsView.setPadding(28,0,0,0);
-                linearLayoutDesc.addView(detailsView);
+            if (i < 7) {
+                configureViewAndPopulateLayouts(linearLayout, linearLayoutDesc, drinkItem, imageView);
+            }
+            else {
+                configureViewAndPopulateLayouts(linearLayout2, linearLayoutDesc2, drinkItem, imageView);
             }
         }
         handleImageViewToRemove(linearLayout, sessionDrinks);
         handleImageViewToRemove(linearLayoutDesc, sessionDrinks);
+        handleImageViewToRemove(linearLayout2, sessionDrinks);
+        handleImageViewToRemove(linearLayoutDesc2, sessionDrinks);
+//        Log.d("SORT_start", "*********");
+//        for(int i = 0 ; i < sessionDrinks.size(); ++i) {
+//            Log.d("SORT", sessionDrinks.get(i).getDrinkingDateTime());
+//        }
+//        Log.d("SORT_end", "*********");
+//        Log.d("SORT_end", "");
+    }
+
+    private void configureViewAndPopulateLayouts(LinearLayout linearLayout, LinearLayout linearLayoutDesc, UIDrinkItem drinkItem, ImageView imageView) {
+        if (imageView != null) {
+            imageView.setPadding(20, 0 ,0 , 0);
+            linearLayout.addView(imageView);
+            TextView detailsView = new TextView(this);
+            String drinkDetailsText = createDrinkDetailsText(drinkItem);
+            detailsView.setTag(imageView.getTag());
+            detailsView.setText(drinkDetailsText);
+            detailsView.setTextSize(10F);
+            detailsView.setPadding(28,0,0,0);
+            linearLayoutDesc.addView(detailsView);
+        }
     }
 
     private String createDrinkDetailsText(UIDrinkItem drinkItem) {

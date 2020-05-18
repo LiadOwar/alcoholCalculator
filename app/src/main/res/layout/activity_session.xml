@@ -13,12 +13,9 @@
         android:layout_width="336dp"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.573"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/speedView"
-        app:layout_constraintVertical_bias="0.0"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/speedView"></LinearLayout>
 
     <LinearLayout
         android:id="@+id/linear_layout_desc"
@@ -64,10 +61,10 @@
         app:srcCompat="@drawable/strongchaser" />
 
     <com.github.anastr.speedviewlib.SpeedView
-        android:id="@+id/speedView"
+        android:id="@+id/futureSpeedView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="124dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.298"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,10 +77,10 @@
         app:sv_withIndicatorLight="false" />
 
     <com.github.anastr.speedviewlib.SpeedView
-        android:id="@+id/futureSpeedView"
+        android:id="@+id/speedView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="124dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.298"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,12 +121,41 @@
         style="@android:style/Widget.Material.Light.Button.Small"
         android:layout_width="31dp"
         android:layout_height="29dp"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="300dp"
         android:layout_marginRight="300dp"
         android:background="@android:drawable/ic_menu_delete"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resetTimeBtn" />
+
+    <Button
+        android:id="@+id/resetTimeBtn"
+        android:layout_width="29dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="300dp"
+        android:layout_marginRight="300dp"
+        android:background="@android:drawable/ic_popup_sync"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fastForwardView" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout2"
+        android:layout_width="336dp"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_desc"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_desc2"
+        android:layout_width="336dp"
+        android:layout_height="43dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout2"
+        app:layout_constraintVertical_bias="0.0"></LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
