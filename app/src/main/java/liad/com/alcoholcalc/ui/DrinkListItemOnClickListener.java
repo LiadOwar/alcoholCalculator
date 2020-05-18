@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.PopupMenu;
 
 import liad.com.alcoholcalc.R;
+import liad.com.alcoholcalc.SessionActivity;
 import liad.com.alcoholcalc.ui.controller.UIController;
 import liad.com.alcoholcalc.ui.drinkitem.UIDrinkItem;
 
@@ -14,6 +15,8 @@ public class DrinkListItemOnClickListener implements View.OnClickListener, Popup
     private UIDrinkItem drinkItem;
 
     private UIController uiController;
+
+    SessionActivity sessionActivity;
 
     private Vibrator vibe;
 

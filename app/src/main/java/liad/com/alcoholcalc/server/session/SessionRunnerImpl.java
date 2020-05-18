@@ -43,12 +43,9 @@ public class SessionRunnerImpl implements SessionRunner {
     public void calculateSessionStatus() {
 
         List<SessionDrinkItem> sessionDrinkingItems = this.drinkingSession.getSessionDrinkingItems();
-        LocalDateTime tempEtOHProcessStartTime = this.drinkingSession.getStartAssumedEtOHProcessTime();
         Double userWeightGr = drinkingSession.getSessionUser().getWeightKg()*1000;
         Double EtOhProcessCoefficient = getEtOHProcessCoefficient();
-        Double BAC = 0D;
         Double accumulatedHypotheticalBAC = 0D;
-        Double potentialEtOHProcess = 0D;
 
         for (int i = 0 ; i < sessionDrinkingItems.size() ; ++i) {
 

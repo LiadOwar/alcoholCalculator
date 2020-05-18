@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -68,7 +67,9 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
 
     private Vibrator vibe;
 
-    VibrateOnOnTouchListener vibrateOnOnTouchListener;
+    private VibrateOnOnTouchListener vibrateOnOnTouchListener;
+
+    private final int LAYOUT_MAX_SIZE = 7;
 
     public SessionActivity() {
     }
@@ -91,7 +92,21 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         initFastForward();
         initClearSessionBtn();
         initResetTimeSessionBtn();
+//        pupulate8drinks();
     }
+
+//    private void pupulate8drinks() {
+//
+//        for( int i = 0 ; i < 7; ++i) {
+//            uiController.addDrinkToSession("STRONGBEER_img_500");
+//            try {
+//                Thread.sleep(600);
+//            } catch (InterruptedException e) {
+//
+//
+//            }
+//        }
+//    }
 
     private void initClearSessionBtn() {
         Button clearSessionButton = (Button)findViewById(R.id.clearSessionBtn);
@@ -215,10 +230,9 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         LinearLayout linearLayout2 = (LinearLayout)findViewById(R.id.linear_layout2);
         LinearLayout linearLayoutDesc2 = (LinearLayout)findViewById(R.id.linear_layout_desc2);
 
-        for(int i = 0; i < sessionDrinks.size(); ++i) {
-            UIDrinkItem drinkItem = sessionDrinks.get(i);
+        for(UIDrinkItem drinkItem : sessionDrinks ) {
             ImageView imageView = createDrinkImage(drinkItem);
-            if (i < 7) {
+            if (sessionDrinks.indexOf(drinkItem) < 7) {
                 configureViewAndPopulateLayouts(linearLayout, linearLayoutDesc, drinkItem, imageView);
             }
             else {
@@ -229,12 +243,25 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         handleImageViewToRemove(linearLayoutDesc, sessionDrinks);
         handleImageViewToRemove(linearLayout2, sessionDrinks);
         handleImageViewToRemove(linearLayoutDesc2, sessionDrinks);
-//        Log.d("SORT_start", "*********");
-//        for(int i = 0 ; i < sessionDrinks.size(); ++i) {
-//            Log.d("SORT", sessionDrinks.get(i).getDrinkingDateTime());
-//        }
-//        Log.d("SORT_end", "*********");
-//        Log.d("SORT_end", "");
+        manageLayouts(linearLayout, linearLayoutDesc, linearLayout2, linearLayoutDesc2);
+    }
+
+    private void manageLayouts(LinearLayout linearLayout1, LinearLayout linearLayoutDesc1,
+                               LinearLayout linearLayout2, LinearLayout linearLayoutDesc2) {
+        int childCount1 = linearLayout1.getChildCount();
+        int childCount2 = linearLayout2.getChildCount();
+
+        if (childCount1 < LAYOUT_MAX_SIZE && childCount2 > 0) {
+            int delta = LAYOUT_MAX_SIZE - childCount1;
+            for (int i = 0 ; i < delta ; ++i) {
+                View image = linearLayout2.getChildAt(i);
+                View description = linearLayoutDesc2.getChildAt(i);
+                linearLayout2.removeView(image);
+                linearLayoutDesc2.removeView(description);
+                linearLayout1.addView(image);
+                linearLayoutDesc1.addView(description);
+            }
+        }
     }
 
     private void configureViewAndPopulateLayouts(LinearLayout linearLayout, LinearLayout linearLayoutDesc, UIDrinkItem drinkItem, ImageView imageView) {
@@ -294,7 +321,6 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         }
         return false;
     }
-
 
     private ImageView createDrinkImage(UIDrinkItem drinkItem) {
         if (isNewDrink(drinkItem)) {
