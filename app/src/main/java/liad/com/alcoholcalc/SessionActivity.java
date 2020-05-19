@@ -69,7 +69,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
 
     private VibrateOnOnTouchListener vibrateOnOnTouchListener;
 
-    private final int LAYOUT_MAX_SIZE = 7;
+    public final int LAYOUT_MAX_SIZE = 7;
 
     public SessionActivity() {
     }
@@ -95,19 +95,22 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
 //        pupulate8drinks();
     }
 
-//    private void pupulate8drinks() {
-//
-//        for( int i = 0 ; i < 7; ++i) {
-//            uiController.addDrinkToSession("STRONGBEER_img_500");
-//            try {
-//                Thread.sleep(600);
-//            } catch (InterruptedException e) {
-//
-//
-//            }
-//        }
-//    }
+    private void pupulate8drinks() {
 
+        for( int i = 0 ; i < 7; ++i) {
+            uiController.addDrinkToSession("STRONGBEER_img_500");
+            try {
+                Thread.sleep(600);
+            } catch (InterruptedException e) {
+
+
+            }
+        }
+    }
+
+    public UIController getUiController() {
+        return uiController;
+    }
     private void initClearSessionBtn() {
         Button clearSessionButton = (Button)findViewById(R.id.clearSessionBtn);
         final Dialog dialog = initAlertBeforeClearSession();
@@ -419,7 +422,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
 
         for (ImageView imageView : imageViews) {
             imageView.setOnTouchListener(new BeverageIconOnTouchListener());
-            imageView.setOnLongClickListener(new BeverageIconLongClickListener(uiController));
+            imageView.setOnLongClickListener(new BeverageIconLongClickListener(this));
         }
     }
 
