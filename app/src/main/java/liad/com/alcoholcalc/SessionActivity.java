@@ -141,6 +141,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 uiController.cleatSession();
+                currentActiveDrinks.clear();
                 fastForwardClickCounter = 0;
             }
         });
@@ -329,7 +330,7 @@ public class SessionActivity extends AppCompatActivity implements Serializable {
             String drinkingDateTime = drinkItem.getDrinkingDateTime();
             String tag = formattedDrinkType.concat("_" + drinkingDateTime);
             ImageView drinkView = new ImageView(this);
-            drinkView.setOnClickListener(new DrinkListItemOnClickListener(drinkItem, uiController, vibe));
+            drinkView.setOnClickListener(new DrinkListItemOnClickListener(drinkItem, uiController, vibe, currentActiveDrinks));
             drinkView.setOnTouchListener(vibrateOnOnTouchListener);
             drinkView.setTag(tag);
             drinkView.setImageResource(imageMap.get(formattedDrinkType));

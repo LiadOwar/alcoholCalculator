@@ -5,8 +5,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
+import java.util.List;
+
 import liad.com.alcoholcalc.R;
-import liad.com.alcoholcalc.SessionActivity;
 import liad.com.alcoholcalc.ui.controller.UIController;
 import liad.com.alcoholcalc.ui.drinkitem.UIDrinkItem;
 
@@ -16,15 +17,16 @@ public class DrinkListItemOnClickListener implements View.OnClickListener, Popup
 
     private UIController uiController;
 
-    SessionActivity sessionActivity;
-
     private Vibrator vibe;
 
+    List<UIDrinkItem> currentActiveDrinks;
 
-    public DrinkListItemOnClickListener(UIDrinkItem drinkItem, UIController uiController, Vibrator vibe) {
+
+    public DrinkListItemOnClickListener(UIDrinkItem drinkItem, UIController uiController, Vibrator vibe, List<UIDrinkItem> currentActiveDrinks) {
         this.drinkItem = drinkItem;
         this.uiController = uiController;
         this.vibe = vibe;
+        this.currentActiveDrinks = currentActiveDrinks;
     }
 
     @Override
@@ -58,6 +60,7 @@ public class DrinkListItemOnClickListener implements View.OnClickListener, Popup
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.remove_drink : uiController.removeDrink(drinkItem);
+                currentActiveDrinks.remove(drinkItem);
                 break;
             default: return false;
         }
